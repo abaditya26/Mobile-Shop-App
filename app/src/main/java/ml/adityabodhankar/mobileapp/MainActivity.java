@@ -38,13 +38,6 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             });
-
-//        TODO: remove below code
-
-            Intent intent = new Intent(this, LoginActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
-//        TODO: end
         }else{
             //no user data
             Intent intent = new Intent(this, LoginActivity.class);

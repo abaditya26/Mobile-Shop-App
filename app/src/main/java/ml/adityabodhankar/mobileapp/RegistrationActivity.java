@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,6 +17,8 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
+
+import org.w3c.dom.Text;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -28,13 +31,15 @@ public class RegistrationActivity extends AppCompatActivity {
     private String gender = "";
     private FirebaseAuth auth;
     private FirebaseFirestore db;
+    private ProgressBar progress;
+    private TextView registerBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
 
-        TextView registerBtn = findViewById(R.id.create_user_btn);
+        registerBtn = findViewById(R.id.create_user_btn);
         TextView signInRedirect = findViewById(R.id.sign_in_redirect);
 
         nameInput = findViewById(R.id.register_name);
@@ -44,6 +49,7 @@ public class RegistrationActivity extends AppCompatActivity {
         phoneInput =findViewById(R.id.register_phone);
         RadioButton maleBtn = findViewById(R.id.register_male_btn);
         RadioButton femaleBtn = findViewById(R.id.register_female_btn);
+        progress = findViewById(R.id.create_user_progress);
 
         maleBtn.setOnClickListener(view -> gender = "male");
         femaleBtn.setOnClickListener(view -> gender = "female");
@@ -58,12 +64,18 @@ public class RegistrationActivity extends AppCompatActivity {
 //        firebase
         auth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
+
+
+        progress.setVisibility(View.GONE);
+        registerBtn.setVisibility(View.VISIBLE);
     }
 
     private void registerUser() {
         if(!validateData()){
             return;
         }
+        progress.setVisibility(View.VISIBLE);
+        registerBtn.setVisibility(View.GONE);
         String name = nameInput.getText().toString();
         String email = emailInput.getText().toString();
         String phone = phoneInput.getText().toString();
@@ -86,10 +98,16 @@ public class RegistrationActivity extends AppCompatActivity {
                                 Intent intent = new Intent(this, MainActivity.class);
                                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                                 startActivity(intent);
+                                progress.setVisibility(View.GONE);
+                                registerBtn.setVisibility(View.VISIBLE);
                             }).addOnFailureListener(e -> {
+                                progress.setVisibility(View.GONE);
+                                registerBtn.setVisibility(View.VISIBLE);
                                 Toast.makeText(this, "Unable to create user :- "+e.getMessage(), Toast.LENGTH_SHORT).show();
                             });
                 }).addOnFailureListener(e -> {
+                    progress.setVisibility(View.GONE);
+                    registerBtn.setVisibility(View.VISIBLE);
                     Toast.makeText(this, "Error! Unable to create user. :- "+e.getMessage(), Toast.LENGTH_SHORT).show();
                 });
     }
@@ -134,4 +152,5 @@ public class RegistrationActivity extends AppCompatActivity {
         }
         return true;
     }
+
 }

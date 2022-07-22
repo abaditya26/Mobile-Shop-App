@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,6 +20,8 @@ public class LoginActivity extends AppCompatActivity {
 
     private EditText emailInput, passwordInput;
     private FirebaseAuth auth;
+    private TextView loginBtn;
+    private ProgressBar progress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,9 +31,10 @@ public class LoginActivity extends AppCompatActivity {
         emailInput = findViewById(R.id.login_email);
         passwordInput = findViewById(R.id.login_password);
 
-        TextView loginBtn = findViewById(R.id.sign_in_btn);
+        loginBtn = findViewById(R.id.sign_in_btn);
         TextView registerNavigateBtn = findViewById(R.id.sign_up_redirect);
         TextView forgetPasswordBtn = findViewById(R.id.forget_password_btn);
+        progress = findViewById(R.id.sign_in_progress);
 
         loginBtn.setOnClickListener(view -> loginBtn());
         registerNavigateBtn.setOnClickListener(view -> {
@@ -40,8 +44,12 @@ public class LoginActivity extends AppCompatActivity {
         });
         forgetPasswordBtn.setOnClickListener(view -> {});
 
+//        firebase
         auth = FirebaseAuth.getInstance();
 
+
+        progress.setVisibility(View.GONE);
+        loginBtn.setVisibility(View.VISIBLE);
     }
 
     private void loginBtn() {
@@ -49,6 +57,8 @@ public class LoginActivity extends AppCompatActivity {
             Toast.makeText(this, "Please verify the details first.", Toast.LENGTH_SHORT).show();
             return;
         }
+        progress.setVisibility(View.VISIBLE);
+        loginBtn.setVisibility(View.GONE);
         String email = emailInput.getText().toString();
         String password = passwordInput.getText().toString();
 
@@ -57,7 +67,11 @@ public class LoginActivity extends AppCompatActivity {
                     Intent intent = new Intent(this, MainActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
+                    progress.setVisibility(View.GONE);
+                    loginBtn.setVisibility(View.VISIBLE);
                 }).addOnFailureListener(e -> {
+                    progress.setVisibility(View.GONE);
+                    loginBtn.setVisibility(View.VISIBLE);
                     Toast.makeText(this, "Error to sign in :- "+e.getMessage(), Toast.LENGTH_SHORT).show();
                 });
     }
