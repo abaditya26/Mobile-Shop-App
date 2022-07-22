@@ -5,12 +5,15 @@
       <map>
         <entry key="..\:/code/android/MobileApp/app/src/main/res/drawable/btn_lg_blue.xml" value="0.239" />
         <entry key="..\:/code/android/MobileApp/app/src/main/res/drawable/login_edit_text_back.xml" value="0.239" />
+        <entry key="..\:/code/android/MobileApp/app/src/main/res/drawable/recycler_categories_back.xml" value="0.121" />
         <entry key="..\:/code/android/MobileApp/app/src/main/res/drawable/top_curve_white.xml" value="0.239" />
         <entry key="..\:/code/android/MobileApp/app/src/main/res/layout/activity_dashboard.xml" value="0.25" />
         <entry key="..\:/code/android/MobileApp/app/src/main/res/layout/activity_login.xml" value="0.20925925925925926" />
         <entry key="..\:/code/android/MobileApp/app/src/main/res/layout/activity_main.xml" value="0.1685185185185185" />
         <entry key="..\:/code/android/MobileApp/app/src/main/res/layout/activity_registration.xml" value="0.25" />
         <entry key="..\:/code/android/MobileApp/app/src/main/res/layout/activity_verification.xml" value="0.25" />
+        <entry key="..\:/code/android/MobileApp/app/src/main/res/layout/recycler_category.xml" value="0.24895833333333334" />
+        <entry key="..\:/code/android/MobileApp/app/src/main/res/menu/dashboard_menu.xml" value="0.25" />
       </map>
     </option>
   </component>
