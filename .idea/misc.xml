@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/code/android/MobileApp/app/src/main/res/drawable/btn_lg_blue.xml" value="0.239" />
+        <entry key="..\:/code/android/MobileApp/app/src/main/res/drawable/login_edit_text_back.xml" value="0.239" />
+        <entry key="..\:/code/android/MobileApp/app/src/main/res/drawable/top_curve_white.xml" value="0.239" />
+        <entry key="..\:/code/android/MobileApp/app/src/main/res/layout/activity_login.xml" value="0.20925925925925926" />
+        <entry key="..\:/code/android/MobileApp/app/src/main/res/layout/activity_main.xml" value="0.1685185185185185" />
+      </map>
+    </option>
+  </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
