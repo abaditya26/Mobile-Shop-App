@@ -27,126 +27,146 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_weight="2"
+
         android:background="@drawable/top_curve_white"
-        android:layout_weight="2">
-
-        <LinearLayout
+        >
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp"
-            android:orientation="vertical">
-
-            <EditText
-                android:id="@+id/register_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
-                android:background="@drawable/login_edit_text_back"
-                android:inputType="text"
-                android:hint="Name"
-                />
-
-            <EditText
-                android:id="@+id/register_email"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/login_edit_text_back"
-                android:inputType="textEmailAddress"
-                android:hint="Email"
-                />
-
-            <EditText
-                android:id="@+id/register_password"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/login_edit_text_back"
-                android:inputType="textPassword"
-                android:hint="Password"
-                />
+            android:layout_height="match_parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:orientation="vertical"
-                android:background="@drawable/login_edit_text_back">
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Gender"
-                    />
-
-                <RadioGroup
+                <EditText
+                    android:id="@+id/register_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:layout_marginTop="40dp"
+                    android:background="@drawable/login_edit_text_back"
+                    android:inputType="text"
+                    android:hint="Name"
+                    />
 
-                    <RadioButton
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
+                <EditText
+                    android:id="@+id/register_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/login_edit_text_back"
+                    android:inputType="textEmailAddress"
+                    android:hint="Email"
+                    />
+
+                <EditText
+                    android:id="@+id/register_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/login_edit_text_back"
+                    android:inputType="textPassword"
+                    android:hint="Password"
+                    />
+
+                <EditText
+                    android:id="@+id/register_c_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/login_edit_text_back"
+                    android:inputType="textPassword"
+                    android:hint="Confirm Password"
+                    />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:orientation="vertical"
+                    android:background="@drawable/login_edit_text_back">
+
+                    <TextView
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Male"
+                        android:text="Gender"
                         />
 
-                    <RadioButton
-                        android:layout_width="0dp"
+                    <RadioGroup
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Female"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/register_male_btn"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:text="Male"
+                            />
+
+                        <RadioButton
+                            android:id="@+id/register_female_btn"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Female"
+                            />
+
+                    </RadioGroup>
+
+                </LinearLayout>
+
+                <EditText
+                    android:id="@+id/register_phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:hint="Phone number"
+                    android:inputType="phone"
+                    android:background="@drawable/login_edit_text_back"
+                    />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp"
+                    android:layout_alignParentBottom="true">
+
+                    <TextView
+                        android:id="@+id/create_user_btn"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Create user"
+                        android:gravity="center"
+                        android:padding="16dp"
+                        android:textSize="20sp"
+                        android:textColor="@color/white"
+                        android:layout_marginBottom="20dp"
+                        android:background="@drawable/btn_lg_blue"
                         />
 
-                </RadioGroup>
+                    <TextView
+                        android:id="@+id/sign_in_redirect"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Already have account? Sign in." />
+
+                </LinearLayout>
 
             </LinearLayout>
 
-            <EditText
-                android:id="@+id/register_phone"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:hint="Phone number"
-                android:inputType="phone"
-                android:background="@drawable/login_edit_text_back"
-                />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingTop="20dp"
-                android:paddingBottom="20dp"
-                android:layout_alignParentBottom="true">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Create user"
-                    android:gravity="center"
-                    android:padding="16dp"
-                    android:textSize="20sp"
-                    android:textColor="@color/white"
-                    android:layout_marginBottom="20dp"
-                    android:background="@drawable/btn_lg_blue"
-                    />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="Already have account? Sign in." />
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-    </ScrollView>
+        </ScrollView>
+    </LinearLayout>
 
 
 </LinearLayout>
