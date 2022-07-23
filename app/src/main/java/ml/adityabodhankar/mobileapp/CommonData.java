@@ -6,7 +6,14 @@ import android.content.Intent;
 
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import ml.adityabodhankar.mobileapp.Models.ProductModel;
+
 public class CommonData {
+
+    public  static ArrayList<ProductModel> products;
 
     public static void signOut(Context context){
         FirebaseAuth auth = FirebaseAuth.getInstance();

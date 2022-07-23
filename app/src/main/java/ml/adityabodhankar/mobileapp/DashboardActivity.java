@@ -6,10 +6,12 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.GridView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +26,7 @@ public class DashboardActivity extends AppCompatActivity {
     private List<CategoryModel> categories;
     private ArrayList<ProductModel> products;
     private RecyclerView categoriesRecycler;
-    private GridView productsView;
+    public static GridView productsView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +37,9 @@ public class DashboardActivity extends AppCompatActivity {
 
         setSupportActionBar(toolbar);
 
+
         categories = new ArrayList<>();
+        categories.add(new CategoryModel("0","All","default"));
         categories.add(new CategoryModel("1","Category 1","default"));
         categories.add(new CategoryModel("2","Category 2","default"));
         categories.add(new CategoryModel("3","Category 3","default"));
@@ -49,17 +53,18 @@ public class DashboardActivity extends AppCompatActivity {
 
 //        products section
         products = new ArrayList<>();
-        products.add(new ProductModel("1","Product 1","default","100","Product 1 desc"));
-        products.add(new ProductModel("2","Product 2","default","230","Product 2 desc"));
-        products.add(new ProductModel("3","Product 3","default","130","Product 3 desc"));
-        products.add(new ProductModel("4","Product 4","default","120","Product 4 desc"));
-        products.add(new ProductModel("5","Product 5","default","150","Product 5 desc"));
-        products.add(new ProductModel("5","Product 5","default","150","Product 5 desc"));
-        products.add(new ProductModel("5","Product 5","default","150","Product 5 desc"));
-        products.add(new ProductModel("5","Product 5","default","150","Product 5 desc"));
-        products.add(new ProductModel("5","Product 5","default","150","Product 5 desc"));
-        products.add(new ProductModel("5","Product 5","default","150","Product 5 desc"));
-        products.add(new ProductModel("5","Product 5","default","150","Product 5 desc"));
+        products.add(new ProductModel("1","Product 1","default","100","Product 1 desc","1"));
+        products.add(new ProductModel("2","Product 2","default","230","Product 2 desc","1"));
+        products.add(new ProductModel("3","Product 3","default","130","Product 3 desc","1"));
+        products.add(new ProductModel("4","Product 4","default","120","Product 4 desc","1"));
+        products.add(new ProductModel("5","Product 5","default","150","Product 5 desc","2"));
+        products.add(new ProductModel("5","Product 6","default","150","Product 6 desc","2"));
+        products.add(new ProductModel("5","Product 7","default","150","Product 7 desc","2"));
+        products.add(new ProductModel("5","Product 8","default","150","Product 8 desc","3"));
+        products.add(new ProductModel("5","Product 9","default","150","Product 9 desc","4"));
+        products.add(new ProductModel("5","Product 10","default","150","Product 10 desc","5"));
+        products.add(new ProductModel("5","Product 11","default","150","Product 11 desc","5"));
+        CommonData.products = products;
 
         productsView = findViewById(R.id.products_grid);
         productsView.setAdapter(new ProductAdapter(this, 0, products));
@@ -76,6 +81,9 @@ public class DashboardActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.logout_btn_menu_item) {
             CommonData.signOut(getApplicationContext());
+            return true;
+        } else if(item.getItemId() == R.id.settings){
+            Toast.makeText(this, "Settings", Toast.LENGTH_SHORT).show();
             return true;
         } else {
             return super.onOptionsItemSelected(item);
