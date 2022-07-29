@@ -24,9 +24,6 @@
             android:name=".ProfileActivity"
             android:exported="false" />
         <activity
-            android:name=".DashboardActivity"
-            android:exported="false" />
-        <activity
             android:name=".RegistrationActivity"
             android:exported="false" />
         <activity

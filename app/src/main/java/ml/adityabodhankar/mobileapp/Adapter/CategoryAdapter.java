@@ -1,13 +1,11 @@
 package ml.adityabodhankar.mobileapp.Adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ml.adityabodhankar.mobileapp.CommonData;
-import ml.adityabodhankar.mobileapp.DashboardActivity;
+import ml.adityabodhankar.mobileapp.Fragments.HomeFragment;
 import ml.adityabodhankar.mobileapp.Models.CategoryModel;
 import ml.adityabodhankar.mobileapp.Models.ProductModel;
 import ml.adityabodhankar.mobileapp.R;
@@ -70,7 +68,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
                 if(categories.get(position).getId().equalsIgnoreCase("0")){
                     products = CommonData.products;
                 }
-                DashboardActivity.productsView.setAdapter(
+                HomeFragment.productsView.setAdapter(
                         new ProductAdapter(context, 0, products));
             });
         }

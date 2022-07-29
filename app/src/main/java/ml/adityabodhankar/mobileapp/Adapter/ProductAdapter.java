@@ -1,7 +1,6 @@
 package ml.adityabodhankar.mobileapp.Adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +12,6 @@ import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 
-import ml.adityabodhankar.mobileapp.DashboardActivity;
 import ml.adityabodhankar.mobileapp.Models.ProductModel;
 import ml.adityabodhankar.mobileapp.R;
 
