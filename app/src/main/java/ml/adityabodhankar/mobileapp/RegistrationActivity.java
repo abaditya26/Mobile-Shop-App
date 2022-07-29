@@ -26,6 +26,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+import ml.adityabodhankar.mobileapp.Models.UserModel;
+
 public class RegistrationActivity extends AppCompatActivity {
 
 
@@ -92,14 +94,10 @@ public class RegistrationActivity extends AppCompatActivity {
         auth.createUserWithEmailAndPassword(email, password)
                 .addOnSuccessListener(authResult -> {
                     String uid = Objects.requireNonNull(auth.getCurrentUser()).getUid();
-                    Map<String, Object> data = new HashMap<>();
-                    data.put("uid", uid);
-                    data.put("name", name);
-                    data.put("email", email);
-                    data.put("phone", phone);
-                    data.put("gender", gender);
-                    data.put("profile", "default");
-                    db.collection("users").document(uid).set(data)
+                    UserModel user = new UserModel(
+                            uid, name, email, phone, "default", gender
+                    );
+                    db.collection("users").document(uid).set(user.toMap())
                             .addOnSuccessListener(unused -> {
                                 Toast.makeText(this, "User Created Successfully", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(this, MainActivity.class);

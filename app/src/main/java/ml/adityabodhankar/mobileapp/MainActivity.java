@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
                                 startActivity(intent);
                             } else {
                                 if (documentSnapshot.exists()) {
-                                    Intent intent = new Intent(this, DashboardActivity.class);
+                                    Intent intent = new Intent(this, HomeActivity.class);
                                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                                     startActivity(intent);
                                 } else {
