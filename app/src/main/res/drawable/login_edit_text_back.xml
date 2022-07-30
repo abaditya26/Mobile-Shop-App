@@ -10,9 +10,9 @@
         android:radius="10dp"
         />
 
-    <solid
-        android:color="#0829A9FF"
-        />
+<!--    <solid-->
+<!--        android:color="#0829A9FF"-->
+<!--        />-->
 
     <padding
         android:bottom="15dp"

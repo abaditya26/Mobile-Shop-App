@@ -10,6 +10,16 @@ public class UserModel {
     public UserModel() {
     }
 
+    public UserModel(Map<String, Object> data){
+        this.uid = (String)data.get("uid");
+        this.name = (String)data.get("name");
+        this.email = (String)data.get("email");
+        this.phone = (String)data.get("phone");
+        this.profile = (String)data.get("profile");
+        this.gender = (String)data.get("gender");
+        this.admin = data.get("admin") != "false";
+    }
+
     public UserModel(String uid, String name, String email, String phone, String profile, String gender) {
         this.uid = uid;
         this.name = name;
