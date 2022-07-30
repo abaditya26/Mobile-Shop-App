@@ -21,9 +21,6 @@
             android:name=".VerificationActivity"
             android:exported="false" />
         <activity
-            android:name=".ProfileActivity"
-            android:exported="false" />
-        <activity
             android:name=".RegistrationActivity"
             android:exported="false" />
         <activity

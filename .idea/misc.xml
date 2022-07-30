@@ -12,9 +12,11 @@
         <entry key="..\:/code/android/MobileApp/app/src/main/res/layout/activity_home.xml" value="0.25" />
         <entry key="..\:/code/android/MobileApp/app/src/main/res/layout/activity_login.xml" value="0.20925925925925926" />
         <entry key="..\:/code/android/MobileApp/app/src/main/res/layout/activity_main.xml" value="0.1685185185185185" />
+        <entry key="..\:/code/android/MobileApp/app/src/main/res/layout/activity_profile.xml" value="0.10989583333333333" />
         <entry key="..\:/code/android/MobileApp/app/src/main/res/layout/activity_registration.xml" value="0.25" />
         <entry key="..\:/code/android/MobileApp/app/src/main/res/layout/activity_verification.xml" value="0.25" />
         <entry key="..\:/code/android/MobileApp/app/src/main/res/layout/fragment_home.xml" value="0.25" />
+        <entry key="..\:/code/android/MobileApp/app/src/main/res/layout/fragment_profile.xml" value="0.25" />
         <entry key="..\:/code/android/MobileApp/app/src/main/res/layout/recycler_category.xml" value="0.24895833333333334" />
         <entry key="..\:/code/android/MobileApp/app/src/main/res/layout/recycler_product.xml" value="0.24895833333333334" />
         <entry key="..\:/code/android/MobileApp/app/src/main/res/menu/bottom_nav_menu.xml" value="0.25" />

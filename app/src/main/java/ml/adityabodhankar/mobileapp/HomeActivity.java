@@ -55,9 +55,9 @@ public class HomeActivity extends AppCompatActivity {
         if (item.getItemId() == R.id.logout_btn_menu_item) {
             CommonData.signOut(getApplicationContext());
             return true;
-        } else if(item.getItemId() == R.id.settings){
-            Toast.makeText(this, "Settings", Toast.LENGTH_SHORT).show();
-            return true;
+//        } else if(item.getItemId() == R.id.settings){
+//            Toast.makeText(this, "Settings", Toast.LENGTH_SHORT).show();
+//            return true;
         } else {
             return super.onOptionsItemSelected(item);
         }
