@@ -1,5 +1,7 @@
 package ml.adityabodhankar.mobileapp.Models;
 
+import java.util.Map;
+
 public class ProductModel {
     private String id, name, image, price, description, category;
 
@@ -13,6 +15,15 @@ public class ProductModel {
         this.price = price;
         this.description = description;
         this.category = category;
+    }
+
+    public ProductModel(Map<String, Object> data) {
+        this.id = (String) data.get("id");
+        this.name = (String) data.get("name");
+        this.image = (String) data.get("image");
+        this.price = (String) data.get("price");
+        this.description = (String) data.get("description");
+        this.category = (String) data.get("category");
     }
 
     public String getCategory() {

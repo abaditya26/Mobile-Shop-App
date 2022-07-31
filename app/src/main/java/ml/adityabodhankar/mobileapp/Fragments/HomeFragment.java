@@ -11,8 +11,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
@@ -33,9 +35,9 @@ public class HomeFragment extends Fragment {
     private RecyclerView categoriesRecycler;
     @SuppressLint("StaticFieldLeak")
     public static GridView productsView;
-    private FirebaseFirestore db;
     private boolean productsLoaded = false;
     private boolean categoriesLoaded = false;
+    private LinearLayout progressLayout, mainLayout;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -43,51 +45,63 @@ public class HomeFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        db = FirebaseFirestore.getInstance();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
         categoriesRecycler = view.findViewById(R.id.category_recycler);
-        categoriesRecycler.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        categoriesRecycler.setLayoutManager(
+                new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 
         productsView = view.findViewById(R.id.products_grid);
 
+        progressLayout = view.findViewById(R.id.progress_products);
+        mainLayout = view.findViewById(R.id.main_screen);
+
+        progressLayout.setVisibility(View.GONE);
+        mainLayout.setVisibility(View.VISIBLE);
+
         db.collection("categories").get()
-                .addOnSuccessListener(queryDocumentSnapshots -> {
+                .addOnSuccessListener(snapshots -> {
+                    categoriesLoaded = false;
+                    setLoading();
                     categories = new ArrayList<>();
+                    categories.add(new CategoryModel("0","All","default"));
+                    for (DocumentSnapshot snapshot : snapshots) {
+                        categories.add(new CategoryModel(Objects.requireNonNull(snapshot.getData())));
+                    }
+                    categoriesRecycler.setAdapter(new CategoryAdapter(getContext(), categories));
+                    categoriesLoaded = true;
+                    setLoading();
                 }).addOnFailureListener(e -> {
                     Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
                 });
         db.collection("products").get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
+                    productsLoaded = false;
+                    setLoading();
                     products = new ArrayList<>();
+                    for(DocumentSnapshot snapshot : queryDocumentSnapshots){
+                        products.add(new ProductModel(Objects.requireNonNull(snapshot.getData())));
+                    }
+                    CommonData.products = products;
+                    productsView.setAdapter(new ProductAdapter(requireContext(), 0, products));
+                    productsLoaded = true;
+                    setLoading();
                 }).addOnFailureListener(e -> {
+                    Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
                 });
-
-        categories = new ArrayList<>();
-        categories.add(new CategoryModel("0","All","default"));
-        categories.add(new CategoryModel("1","Category 1","default"));
-        categories.add(new CategoryModel("2","Category 2","default"));
-        categories.add(new CategoryModel("3","Category 3","default"));
-        categories.add(new CategoryModel("4","Category 4","default"));
-        categories.add(new CategoryModel("5","Category 5","default"));
-        categories.add(new CategoryModel("6","Category 6","default"));
-
-        categoriesRecycler.setAdapter(new CategoryAdapter(getContext(), categories));
-
-//        products section
-        products = new ArrayList<>();
-        products.add(new ProductModel("1","Product 1","default","100","Product 1 desc","1"));
-        products.add(new ProductModel("2","Product 2","default","230","Product 2 desc","1"));
-        products.add(new ProductModel("3","Product 3","default","130","Product 3 desc","1"));
-        products.add(new ProductModel("4","Product 4","default","120","Product 4 desc","1"));
-        products.add(new ProductModel("5","Product 5","default","150","Product 5 desc","2"));
-        products.add(new ProductModel("5","Product 6","default","150","Product 6 desc","2"));
-        products.add(new ProductModel("5","Product 7","default","150","Product 7 desc","2"));
-        products.add(new ProductModel("5","Product 8","default","150","Product 8 desc","3"));
-        products.add(new ProductModel("5","Product 9","default","150","Product 9 desc","4"));
-        products.add(new ProductModel("5","Product 10","default","150","Product 10 desc","5"));
-        products.add(new ProductModel("5","Product 11","default","150","Product 11 desc","5"));
-        CommonData.products = products;
-
-        productsView.setAdapter(new ProductAdapter(requireContext(), 0, products));
         return  view;
+    }
+
+    void setLoading(){
+        if(productsLoaded && categoriesLoaded){
+            //loading false
+            //view data
+            progressLayout.setVisibility(View.GONE);
+            mainLayout.setVisibility(View.VISIBLE);
+        }else{
+            //loading true
+            //show loading
+            progressLayout.setVisibility(View.VISIBLE);
+            mainLayout.setVisibility(View.GONE);
+        }
     }
 }
