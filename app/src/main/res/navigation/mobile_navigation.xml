@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/navigation_home"
         android:name="ml.adityabodhankar.mobileapp.Fragments.AdminHomeFragment"
-        android:label="@string/title_home"
+        android:label="Admin Home"
         tools:layout="@layout/fragment_admin_home" />
 
     <fragment
@@ -16,6 +16,16 @@
         android:name="ml.adityabodhankar.mobileapp.Fragments.AdminOrdersFragment"
         android:label="Orders"
         tools:layout="@layout/fragment_admin_orders" />
+    <fragment
+        android:id="@+id/navigation_products"
+        android:name="ml.adityabodhankar.mobileapp.Fragments.ProductsFragment"
+        android:label="Products"
+        tools:layout="@layout/fragment_products" />
+    <fragment
+        android:id="@+id/navigation_category"
+        android:name="ml.adityabodhankar.mobileapp.Fragments.CategoriesFragment"
+        android:label="Categories"
+        tools:layout="@layout/fragment_categories" />
 
     <fragment
         android:id="@+id/navigation_profile"

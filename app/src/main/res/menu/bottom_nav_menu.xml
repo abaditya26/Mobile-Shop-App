@@ -11,6 +11,14 @@
         android:icon="@drawable/ic_baseline_fact_check_24"
         android:title="Orders" />
     <item
+        android:id="@+id/navigation_products"
+        android:icon="@drawable/ic_baseline_person_24"
+        android:title="Products" />
+    <item
+        android:id="@+id/navigation_category"
+        android:icon="@drawable/ic_baseline_person_24"
+        android:title="Categories" />
+    <item
         android:id="@+id/navigation_profile"
         android:icon="@drawable/ic_baseline_person_24"
         android:title="Profile" />
