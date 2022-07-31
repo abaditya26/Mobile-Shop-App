@@ -9,4 +9,5 @@
     <string name="title_notifications">Notifications</string>
     <string name="title_activity_admin_dash">AdminDashActivity</string>
     <string name="title_activity_admin">AdminActivity</string>
+    <string name="title_activity_admin_page">AdminPageActivity</string>
 </resources>

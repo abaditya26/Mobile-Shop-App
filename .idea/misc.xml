@@ -8,7 +8,9 @@
         <entry key="..\:/code/android/MobileApp/app/src/main/res/drawable/product_back.xml" value="0.168" />
         <entry key="..\:/code/android/MobileApp/app/src/main/res/drawable/recycler_categories_back.xml" value="0.121" />
         <entry key="..\:/code/android/MobileApp/app/src/main/res/drawable/top_curve_white.xml" value="0.239" />
+        <entry key="..\:/code/android/MobileApp/app/src/main/res/layout/activity_admin.xml" value="0.25" />
         <entry key="..\:/code/android/MobileApp/app/src/main/res/layout/activity_admin_dash.xml" value="0.2359375" />
+        <entry key="..\:/code/android/MobileApp/app/src/main/res/layout/activity_admin_page.xml" value="0.10989583333333333" />
         <entry key="..\:/code/android/MobileApp/app/src/main/res/layout/activity_dashboard.xml" value="0.25" />
         <entry key="..\:/code/android/MobileApp/app/src/main/res/layout/activity_home.xml" value="0.25" />
         <entry key="..\:/code/android/MobileApp/app/src/main/res/layout/activity_login.xml" value="0.20925925925925926" />
@@ -16,13 +18,18 @@
         <entry key="..\:/code/android/MobileApp/app/src/main/res/layout/activity_profile.xml" value="0.10989583333333333" />
         <entry key="..\:/code/android/MobileApp/app/src/main/res/layout/activity_registration.xml" value="0.25" />
         <entry key="..\:/code/android/MobileApp/app/src/main/res/layout/activity_verification.xml" value="0.25" />
+        <entry key="..\:/code/android/MobileApp/app/src/main/res/layout/app_bar_admin.xml" value="0.25" />
+        <entry key="..\:/code/android/MobileApp/app/src/main/res/layout/content_admin.xml" value="0.25" />
         <entry key="..\:/code/android/MobileApp/app/src/main/res/layout/fragment_admin_home.xml" value="0.2359375" />
+        <entry key="..\:/code/android/MobileApp/app/src/main/res/layout/fragment_admin_orders.xml" value="0.1" />
         <entry key="..\:/code/android/MobileApp/app/src/main/res/layout/fragment_home.xml" value="0.25" />
         <entry key="..\:/code/android/MobileApp/app/src/main/res/layout/fragment_profile.xml" value="0.25" />
+        <entry key="..\:/code/android/MobileApp/app/src/main/res/layout/nav_header_admin.xml" value="0.25" />
         <entry key="..\:/code/android/MobileApp/app/src/main/res/layout/recycler_category.xml" value="0.24895833333333334" />
         <entry key="..\:/code/android/MobileApp/app/src/main/res/layout/recycler_product.xml" value="0.24895833333333334" />
         <entry key="..\:/code/android/MobileApp/app/src/main/res/menu/admin_bottom_nav_menu.xml" value="0.25" />
         <entry key="..\:/code/android/MobileApp/app/src/main/res/menu/bottom_nav_menu.xml" value="0.25" />
+        <entry key="..\:/code/android/MobileApp/app/src/main/res/menu/bottom_nav_menu_user.xml" value="0.10989583333333333" />
         <entry key="..\:/code/android/MobileApp/app/src/main/res/menu/dashboard_menu.xml" value="0.25" />
       </map>
     </option>

@@ -19,6 +19,7 @@ import java.util.Objects;
 
 import ml.adityabodhankar.mobileapp.databinding.ActivityHomeBinding;
 
+
 public class HomeActivity extends AppCompatActivity {
 
     private ActivityHomeBinding binding;

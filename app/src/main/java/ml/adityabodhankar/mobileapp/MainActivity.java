@@ -13,6 +13,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -31,8 +32,9 @@ public class MainActivity extends AppCompatActivity {
                 db.collection("users").document(auth.getCurrentUser().getUid())
                         .get().addOnSuccessListener(snapshot -> {
                             boolean admin = Boolean.TRUE.equals(snapshot.getBoolean("admin"));
+                            System.out.println(admin);
                             if (admin) {
-                                Intent intent = new Intent(this, HomeActivity.class);
+                                Intent intent = new Intent(this, AdminPageActivity.class);
                                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                                 startActivity(intent);
                             } else {
