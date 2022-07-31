@@ -10,9 +10,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import ml.adityabodhankar.mobileapp.CommonData;
 import ml.adityabodhankar.mobileapp.Fragments.HomeFragment;
 import ml.adityabodhankar.mobileapp.Models.CategoryModel;
@@ -46,7 +49,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView image;
+        CircleImageView image;
         TextView title;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -57,10 +60,12 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
 
         public void setData(List<CategoryModel> categories, int position) {
             title.setText(categories.get(position).getTitle());
+            if(!categories.get(position).getImage().equalsIgnoreCase("default")){
+                Glide.with(context).load(categories.get(position).getImage()).into(image);
+            }
             itemView.setOnClickListener(view -> {
                 ArrayList<ProductModel> products = new ArrayList<>();
-                for (ProductModel p :
-                        CommonData.products) {
+                for (ProductModel p : CommonData.products) {
                     if(p.getCategory().equalsIgnoreCase(categories.get(position).getId())){
                         products.add(p);
                     }

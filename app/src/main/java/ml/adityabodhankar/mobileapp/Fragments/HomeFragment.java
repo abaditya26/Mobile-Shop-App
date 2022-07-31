@@ -41,23 +41,17 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-
-        View view = inflater.inflate(R.layout.fragment_home, container, false);
-
+        View view = inflater.inflate(R.layout.fragment_user_home, container, false);
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         categoriesRecycler = view.findViewById(R.id.category_recycler);
         categoriesRecycler.setLayoutManager(
-                new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-
+                new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL,
+                        false));
         productsView = view.findViewById(R.id.products_grid);
-
         progressLayout = view.findViewById(R.id.progress_products);
         mainLayout = view.findViewById(R.id.main_screen);
-
-        progressLayout.setVisibility(View.GONE);
-        mainLayout.setVisibility(View.VISIBLE);
-
+        progressLayout.setVisibility(View.VISIBLE);
+        mainLayout.setVisibility(View.GONE);
         db.collection("categories").get()
                 .addOnSuccessListener(snapshots -> {
                     categoriesLoaded = false;
@@ -65,7 +59,8 @@ public class HomeFragment extends Fragment {
                     categories = new ArrayList<>();
                     categories.add(new CategoryModel("0","All","default"));
                     for (DocumentSnapshot snapshot : snapshots) {
-                        categories.add(new CategoryModel(Objects.requireNonNull(snapshot.getData())));
+                        categories.add(
+                                new CategoryModel(Objects.requireNonNull(snapshot.getData())));
                     }
                     categoriesRecycler.setAdapter(new CategoryAdapter(getContext(), categories));
                     categoriesLoaded = true;
@@ -82,7 +77,8 @@ public class HomeFragment extends Fragment {
                         products.add(new ProductModel(Objects.requireNonNull(snapshot.getData())));
                     }
                     CommonData.products = products;
-                    productsView.setAdapter(new ProductAdapter(requireContext(), 0, products));
+                    productsView.setAdapter(
+                            new ProductAdapter(requireContext(), 0, products));
                     productsLoaded = true;
                     setLoading();
                 }).addOnFailureListener(e -> {
@@ -91,14 +87,12 @@ public class HomeFragment extends Fragment {
         return  view;
     }
 
-    void setLoading(){
+    private void setLoading(){
         if(productsLoaded && categoriesLoaded){
-            //loading false
             //view data
             progressLayout.setVisibility(View.GONE);
             mainLayout.setVisibility(View.VISIBLE);
         }else{
-            //loading true
             //show loading
             progressLayout.setVisibility(View.VISIBLE);
             mainLayout.setVisibility(View.GONE);
