@@ -53,7 +53,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         TextView title;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-
             image = itemView.findViewById(R.id.category_image);
             title = itemView.findViewById(R.id.category_title);
         }

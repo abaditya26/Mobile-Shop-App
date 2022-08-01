@@ -35,8 +35,10 @@ public class AdminPageActivity extends AppCompatActivity {
                 R.id.navigation_home, R.id.navigation_orders,R.id.navigation_products,
                 R.id.navigation_category, R.id.navigation_profile)
                 .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_admin_page);
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+        NavController navController = Navigation.findNavController(
+                this, R.id.nav_host_fragment_activity_admin_page);
+        NavigationUI.setupActionBarWithNavController(
+                this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
     }
 
