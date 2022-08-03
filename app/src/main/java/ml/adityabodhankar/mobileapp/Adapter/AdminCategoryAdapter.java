@@ -6,11 +6,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.List;
 
@@ -49,6 +53,7 @@ public class AdminCategoryAdapter extends RecyclerView.Adapter<AdminCategoryAdap
         CircleImageView image;
         TextView title;
         ImageButton deleteBtn;
+        private FirebaseFirestore db = FirebaseFirestore.getInstance();
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
@@ -63,6 +68,12 @@ public class AdminCategoryAdapter extends RecyclerView.Adapter<AdminCategoryAdap
                 Glide.with(context).load(categories.get(position).getImage()).into(image);
             }
             deleteBtn.setOnClickListener(view -> {
+                db.collection("categories").document(categories.get(position).getId()).delete()
+                        .addOnSuccessListener(unused -> {
+                            Toast.makeText(context, "Category Deleted", Toast.LENGTH_SHORT).show();
+                        }).addOnFailureListener(e -> {
+                            Toast.makeText(context, "Error to delete category.", Toast.LENGTH_SHORT).show();
+                        });
             });
         }
     }
