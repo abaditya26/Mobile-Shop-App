@@ -1,5 +1,6 @@
 package ml.adityabodhankar.mobileapp.Fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -24,6 +26,7 @@ import java.util.Objects;
 
 import ml.adityabodhankar.mobileapp.Adapter.AdminCategoryAdapter;
 import ml.adityabodhankar.mobileapp.Adapter.CategoryAdapter;
+import ml.adityabodhankar.mobileapp.AddCategoryActivity;
 import ml.adityabodhankar.mobileapp.Models.CategoryModel;
 import ml.adityabodhankar.mobileapp.R;
 
@@ -51,6 +54,11 @@ public class CategoriesFragment extends Fragment {
             }else{
                 Toast.makeText(requireContext(), "Error:- "+ Objects.requireNonNull(error).getMessage(), Toast.LENGTH_SHORT).show();
             }
+        });
+
+        FloatingActionButton fab = view.findViewById(R.id.fab_add_category);
+        fab.setOnClickListener(view1 -> {
+            startActivity(new Intent(requireContext(), AddCategoryActivity.class));
         });
         return  view;
     }

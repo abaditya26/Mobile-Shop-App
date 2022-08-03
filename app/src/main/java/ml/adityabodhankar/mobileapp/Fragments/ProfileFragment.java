@@ -111,31 +111,35 @@ public class ProfileFragment extends Fragment {
         db.collection("users")
                 .document(Objects.requireNonNull(auth.getCurrentUser()).getUid())
                 .addSnapshotListener((value, error) -> {
-                    if (value != null && value.exists()){
-                        //snapshot exists
-                        if(value.getData() == null){
-                            Toast.makeText(getContext(), "No Data Found", Toast.LENGTH_SHORT).show();
-                        }else {
-                            user = new UserModel(value.getData());
-                            emailView.setText(user.getEmail());
-                            nameInput.setText(user.getName());
-                            phoneInput.setText(user.getPhone());
-                            gender = user.getGender();
-                            if(!user.getProfile().equalsIgnoreCase("default")){
-                                Glide.with(requireContext()).load(user.getProfile()).into(userIcon);
+                    try {
+                        if (value != null && value.exists()) {
+                            //snapshot exists
+                            if (value.getData() == null) {
+                                Toast.makeText(getContext(), "No Data Found", Toast.LENGTH_SHORT).show();
+                            } else {
+                                user = new UserModel(value.getData());
+                                emailView.setText(user.getEmail());
+                                nameInput.setText(user.getName());
+                                phoneInput.setText(user.getPhone());
+                                gender = user.getGender();
+                                if (!user.getProfile().equalsIgnoreCase("default")) {
+                                    Glide.with(requireContext()).load(user.getProfile()).into(userIcon);
+                                }
+                                if (gender.equalsIgnoreCase("male")) {
+                                    maleBtn.setChecked(true);
+                                } else {
+                                    femaleBtn.setChecked(false);
+                                }
+                                disableInput();
                             }
-                            if(gender.equalsIgnoreCase("male")){
-                                maleBtn.setChecked(true);
-                            }else{
-                                femaleBtn.setChecked(false);
-                            }
-                            disableInput();
+                        } else {
+                            Toast.makeText(getContext(), "No data found", Toast.LENGTH_SHORT).show();
                         }
-                    }else{
-                        Toast.makeText(getContext(), "No data found", Toast.LENGTH_SHORT).show();
+                        progress.setVisibility(View.GONE);
+                        updateProfileBtn.setVisibility(View.VISIBLE);
+                    }catch (Exception ignored){
+                        Toast.makeText(getContext(), "Unable to sync data", Toast.LENGTH_SHORT).show();
                     }
-                    progress.setVisibility(View.GONE);
-                    updateProfileBtn.setVisibility(View.VISIBLE);
                 });
         return view;
     }
