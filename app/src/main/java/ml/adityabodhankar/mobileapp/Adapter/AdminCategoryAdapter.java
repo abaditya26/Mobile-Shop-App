@@ -1,6 +1,7 @@
 package ml.adityabodhankar.mobileapp.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import ml.adityabodhankar.mobileapp.AddCategoryActivity;
 import ml.adityabodhankar.mobileapp.Models.CategoryModel;
 import ml.adityabodhankar.mobileapp.R;
 
@@ -53,7 +55,7 @@ public class AdminCategoryAdapter extends RecyclerView.Adapter<AdminCategoryAdap
         CircleImageView image;
         TextView title;
         ImageButton deleteBtn;
-        private FirebaseFirestore db = FirebaseFirestore.getInstance();
+        private final FirebaseFirestore db = FirebaseFirestore.getInstance();
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
@@ -69,11 +71,13 @@ public class AdminCategoryAdapter extends RecyclerView.Adapter<AdminCategoryAdap
             }
             deleteBtn.setOnClickListener(view -> {
                 db.collection("categories").document(categories.get(position).getId()).delete()
-                        .addOnSuccessListener(unused -> {
-                            Toast.makeText(context, "Category Deleted", Toast.LENGTH_SHORT).show();
-                        }).addOnFailureListener(e -> {
-                            Toast.makeText(context, "Error to delete category.", Toast.LENGTH_SHORT).show();
-                        });
+                        .addOnSuccessListener(unused -> Toast.makeText(context, "Category Deleted", Toast.LENGTH_SHORT).show())
+                        .addOnFailureListener(e -> Toast.makeText(context, "Error to delete category.", Toast.LENGTH_SHORT).show());
+            });
+            itemView.setOnClickListener(view -> {
+                Intent intent = new Intent(context, AddCategoryActivity.class);
+                intent.putExtra("categoryId", categories.get(position).getId());
+                context.startActivity(intent);
             });
         }
     }
