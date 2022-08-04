@@ -2,17 +2,16 @@ package ml.adityabodhankar.mobileapp.Fragments;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -30,14 +29,15 @@ import ml.adityabodhankar.mobileapp.R;
 
 public class HomeFragment extends Fragment {
 
+    @SuppressLint("StaticFieldLeak")
+    public static GridView productsView;
     private List<CategoryModel> categories;
     private ArrayList<ProductModel> products;
     private RecyclerView categoriesRecycler;
-    @SuppressLint("StaticFieldLeak")
-    public static GridView productsView;
     private boolean productsLoaded = false;
     private boolean categoriesLoaded = false;
     private LinearLayout progressLayout, mainLayout;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -57,7 +57,7 @@ public class HomeFragment extends Fragment {
                     categoriesLoaded = false;
                     setLoading();
                     categories = new ArrayList<>();
-                    categories.add(new CategoryModel("0","All","default"));
+                    categories.add(new CategoryModel("0", "All", "default"));
                     for (DocumentSnapshot snapshot : snapshots) {
                         categories.add(
                                 new CategoryModel(Objects.requireNonNull(snapshot.getData())));
@@ -73,7 +73,7 @@ public class HomeFragment extends Fragment {
                     productsLoaded = false;
                     setLoading();
                     products = new ArrayList<>();
-                    for(DocumentSnapshot snapshot : queryDocumentSnapshots){
+                    for (DocumentSnapshot snapshot : queryDocumentSnapshots) {
                         products.add(new ProductModel(Objects.requireNonNull(snapshot.getData())));
                     }
                     CommonData.products = products;
@@ -84,15 +84,15 @@ public class HomeFragment extends Fragment {
                 }).addOnFailureListener(e -> {
                     Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
                 });
-        return  view;
+        return view;
     }
 
-    private void setLoading(){
-        if(productsLoaded && categoriesLoaded){
+    private void setLoading() {
+        if (productsLoaded && categoriesLoaded) {
             //view data
             progressLayout.setVisibility(View.GONE);
             mainLayout.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             //show loading
             progressLayout.setVisibility(View.VISIBLE);
             mainLayout.setVisibility(View.GONE);

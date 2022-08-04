@@ -8,10 +8,10 @@ public class CategoryModel {
     public CategoryModel() {
     }
 
-    public CategoryModel(Map<String, Object> data){
-        this.id = (String)data.get("id");
-        this.title = (String)data.get("title");
-        this.image = (String)data.get("image");
+    public CategoryModel(Map<String, Object> data) {
+        this.id = (String) data.get("id");
+        this.title = (String) data.get("title");
+        this.image = (String) data.get("image");
     }
 
     public CategoryModel(String id, String title, String image) {

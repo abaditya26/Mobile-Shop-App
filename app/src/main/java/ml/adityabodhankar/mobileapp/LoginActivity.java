@@ -1,10 +1,6 @@
 package ml.adityabodhankar.mobileapp;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -14,9 +10,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.AuthResult;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.firebase.auth.FirebaseAuth;
 
 public class LoginActivity extends AppCompatActivity {
@@ -50,7 +45,8 @@ public class LoginActivity extends AppCompatActivity {
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
         });
-        forgetPasswordBtn.setOnClickListener(view -> {});
+        forgetPasswordBtn.setOnClickListener(view -> {
+        });
 
 //        firebase
         auth = FirebaseAuth.getInstance();
@@ -61,7 +57,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void loginBtn() {
-        if(!validateInput()){
+        if (!validateInput()) {
             Toast.makeText(this, "Please verify the details first.", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -80,20 +76,20 @@ public class LoginActivity extends AppCompatActivity {
                 }).addOnFailureListener(e -> {
                     progress.setVisibility(View.GONE);
                     loginBtn.setVisibility(View.VISIBLE);
-                    Toast.makeText(this, "Error to sign in :- "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Error to sign in :- " + e.getMessage(), Toast.LENGTH_SHORT).show();
                 });
     }
 
     private boolean validateInput() {
-        if(emailInput.getText().toString().equalsIgnoreCase("")){
+        if (emailInput.getText().toString().equalsIgnoreCase("")) {
             emailInput.setError("Required field");
             return false;
         }
-        if (passwordInput.getText().toString().equalsIgnoreCase("")){
+        if (passwordInput.getText().toString().equalsIgnoreCase("")) {
             passwordInput.setError("Required field");
             return false;
         }
-        if (passwordInput.getText().toString().length() < 6){
+        if (passwordInput.getText().toString().length() < 6) {
             passwordInput.setError("Minimum password length is 6");
             return false;
         }

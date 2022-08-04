@@ -1,7 +1,6 @@
 package ml.adityabodhankar.mobileapp.Adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,14 +12,11 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-import ml.adityabodhankar.mobileapp.AddCategoryActivity;
 import ml.adityabodhankar.mobileapp.Models.ProductModel;
 import ml.adityabodhankar.mobileapp.R;
 
@@ -51,10 +47,11 @@ public class AdminProductAdapter extends RecyclerView.Adapter<AdminProductAdapte
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+        private final FirebaseFirestore db = FirebaseFirestore.getInstance();
         CircleImageView image;
         TextView title;
         ImageButton deleteBtn;
-        private final FirebaseFirestore db = FirebaseFirestore.getInstance();
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             image = itemView.findViewById(R.id.admin_product_image);
@@ -64,7 +61,7 @@ public class AdminProductAdapter extends RecyclerView.Adapter<AdminProductAdapte
 
         public void setData(List<ProductModel> products, int position) {
             title.setText(products.get(position).getName());
-            if (!products.get(position).getImage().equalsIgnoreCase("default")){
+            if (!products.get(position).getImage().equalsIgnoreCase("default")) {
                 Glide.with(context).load(products.get(position).getImage()).into(image);
             }
             deleteBtn.setOnClickListener(view -> db.collection("products").document(products.get(position).getId()).delete()

@@ -23,9 +23,9 @@
         android:layout_toStartOf="@+id/admin_product_delete"
         android:layout_toEndOf="@+id/admin_product_image"
         android:gravity="center_vertical"
-        android:textSize="18sp"
         android:padding="10dp"
-        android:text="Product name goes here" />
+        android:text="Product name goes here"
+        android:textSize="18sp" />
 
     <ImageButton
         android:id="@+id/admin_product_delete"

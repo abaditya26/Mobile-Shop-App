@@ -1,8 +1,5 @@
 package ml.adityabodhankar.mobileapp;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -13,8 +10,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.Objects;
@@ -48,7 +45,7 @@ public class VerificationActivity extends AppCompatActivity {
 
         auth = FirebaseAuth.getInstance();
 
-        if (auth.getCurrentUser() == null){
+        if (auth.getCurrentUser() == null) {
             Intent intent = new Intent(this, MainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
@@ -70,7 +67,7 @@ public class VerificationActivity extends AppCompatActivity {
     }
 
 
-    private void sendLink(){
+    private void sendLink() {
         verificationPending.setVisibility(View.VISIBLE);
         verificationSent.setVisibility(View.GONE);
         progress.setVisibility(View.VISIBLE);

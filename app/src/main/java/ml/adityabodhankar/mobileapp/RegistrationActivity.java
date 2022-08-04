@@ -1,8 +1,5 @@
 package ml.adityabodhankar.mobileapp;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -14,16 +11,11 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.AuthResult;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import org.w3c.dom.Text;
-
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 
 import ml.adityabodhankar.mobileapp.Models.UserModel;
@@ -55,7 +47,7 @@ public class RegistrationActivity extends AppCompatActivity {
         emailInput = findViewById(R.id.register_email);
         passwordInput = findViewById(R.id.register_password);
         cPasswordInput = findViewById(R.id.register_c_password);
-        phoneInput =findViewById(R.id.register_phone);
+        phoneInput = findViewById(R.id.register_phone);
         RadioButton maleBtn = findViewById(R.id.register_male_btn);
         RadioButton femaleBtn = findViewById(R.id.register_female_btn);
         progress = findViewById(R.id.create_user_progress);
@@ -80,7 +72,7 @@ public class RegistrationActivity extends AppCompatActivity {
     }
 
     private void registerUser() {
-        if(!validateData()){
+        if (!validateData()) {
             return;
         }
         progress.setVisibility(View.VISIBLE);
@@ -108,49 +100,49 @@ public class RegistrationActivity extends AppCompatActivity {
                             }).addOnFailureListener(e -> {
                                 progress.setVisibility(View.GONE);
                                 registerBtn.setVisibility(View.VISIBLE);
-                                Toast.makeText(this, "Unable to create user :- "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(this, "Unable to create user :- " + e.getMessage(), Toast.LENGTH_SHORT).show();
                             });
                 }).addOnFailureListener(e -> {
                     progress.setVisibility(View.GONE);
                     registerBtn.setVisibility(View.VISIBLE);
-                    Toast.makeText(this, "Error! Unable to create user. :- "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Error! Unable to create user. :- " + e.getMessage(), Toast.LENGTH_SHORT).show();
                 });
     }
 
     private boolean validateData() {
-        if(emailInput.getText().toString().equalsIgnoreCase("")){
+        if (emailInput.getText().toString().equalsIgnoreCase("")) {
             emailInput.setError("Required field");
             return false;
         }
-        if (nameInput.getText().toString().equalsIgnoreCase("")){
+        if (nameInput.getText().toString().equalsIgnoreCase("")) {
             nameInput.setError("Required Field");
             return false;
         }
-        if (phoneInput.getText().toString().equalsIgnoreCase("")){
+        if (phoneInput.getText().toString().equalsIgnoreCase("")) {
             phoneInput.setError("Required Field");
             return false;
         }
-        if (gender.equalsIgnoreCase("")){
+        if (gender.equalsIgnoreCase("")) {
             Toast.makeText(this, "Please Select gender", Toast.LENGTH_SHORT).show();
             return false;
         }
-        if (cPasswordInput.getText().toString().equalsIgnoreCase("")){
+        if (cPasswordInput.getText().toString().equalsIgnoreCase("")) {
             cPasswordInput.setError("Required Field");
             return false;
         }
-        if (passwordInput.getText().toString().equalsIgnoreCase("")){
+        if (passwordInput.getText().toString().equalsIgnoreCase("")) {
             passwordInput.setError("Required field");
             return false;
         }
-        if (passwordInput.getText().toString().length() < 6){
+        if (passwordInput.getText().toString().length() < 6) {
             passwordInput.setError("Minimum password length is 6");
             return false;
         }
-        if (cPasswordInput.getText().toString().length() < 6){
+        if (cPasswordInput.getText().toString().length() < 6) {
             cPasswordInput.setError("Minimum password length is 6");
             return false;
         }
-        if(!passwordInput.getText().toString().equals(cPasswordInput.getText().toString())){
+        if (!passwordInput.getText().toString().equals(cPasswordInput.getText().toString())) {
             passwordInput.setError("Both passwords not match");
             cPasswordInput.setError("Both passwords not match");
             return false;

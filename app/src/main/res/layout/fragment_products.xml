@@ -18,9 +18,9 @@
         android:layout_alignParentBottom="true"
         android:layout_margin="20dp"
         android:clickable="true"
-        android:src="@drawable/ic_baseline_add_24"
+        android:contentDescription="Add Product Button"
         android:focusable="true"
-        android:contentDescription="Add Product Button"/>
+        android:src="@drawable/ic_baseline_add_24" />
 
 
 </RelativeLayout>

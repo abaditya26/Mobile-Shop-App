@@ -1,11 +1,6 @@
 package ml.adityabodhankar.mobileapp.Fragments;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,14 +10,11 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.fragment.app.Fragment;
+
 import com.bumptech.glide.Glide;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 
 import java.util.Objects;
 
@@ -64,26 +56,26 @@ public class ProfileFragment extends Fragment {
         RadioButton maleBtn = view.findViewById(R.id.profile_male_btn);
         RadioButton femaleBtn = view.findViewById(R.id.profile_female_btn);
         maleBtn.setOnClickListener(view1 -> {
-            if(enabled){
+            if (enabled) {
                 gender = "male";
-            }else{
-                if(gender.equalsIgnoreCase("female")){
+            } else {
+                if (gender.equalsIgnoreCase("female")) {
                     femaleBtn.setChecked(true);
                 }
             }
         });
         femaleBtn.setOnClickListener(view1 -> {
-            if(enabled){
+            if (enabled) {
                 gender = "female";
-            }else{
-                if(gender.equalsIgnoreCase("male")){
+            } else {
+                if (gender.equalsIgnoreCase("male")) {
                     maleBtn.setChecked(true);
                 }
             }
         });
         updateProfileBtn.setOnClickListener(view2 -> {
-            if(enabled){
-                if(!validateInput()){
+            if (enabled) {
+                if (!validateInput()) {
                     return;
                 }
                 user.setName(nameInput.getText().toString());
@@ -104,7 +96,7 @@ public class ProfileFragment extends Fragment {
                             progress.setVisibility(View.GONE);
                             updateProfileBtn.setVisibility(View.VISIBLE);
                         });
-            }else{
+            } else {
                 enableInput();
             }
         });
@@ -137,7 +129,7 @@ public class ProfileFragment extends Fragment {
                         }
                         progress.setVisibility(View.GONE);
                         updateProfileBtn.setVisibility(View.VISIBLE);
-                    }catch (Exception ignored){
+                    } catch (Exception ignored) {
                         Toast.makeText(getContext(), "Unable to sync data", Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -145,29 +137,29 @@ public class ProfileFragment extends Fragment {
     }
 
     private boolean validateInput() {
-        if (nameInput.getText().toString().equalsIgnoreCase("")){
+        if (nameInput.getText().toString().equalsIgnoreCase("")) {
             nameInput.setError("Required Field");
             return false;
         }
-        if (phoneInput.getText().toString().equalsIgnoreCase("")){
+        if (phoneInput.getText().toString().equalsIgnoreCase("")) {
             phoneInput.setError("Required Field");
             return false;
         }
-        if (gender.equalsIgnoreCase("")){
+        if (gender.equalsIgnoreCase("")) {
             Toast.makeText(getContext(), "Please Select gender", Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;
     }
 
-    private void enableInput(){
+    private void enableInput() {
         enabled = true;
         nameInput.setEnabled(true);
         phoneInput.setEnabled(true);
         updateProfileBtn.setText("Update Profile");
     }
 
-    private void disableInput(){
+    private void disableInput() {
         enabled = false;
         nameInput.setEnabled(false);
         phoneInput.setEnabled(false);

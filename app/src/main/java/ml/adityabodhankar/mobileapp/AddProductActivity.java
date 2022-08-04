@@ -1,8 +1,8 @@
 package ml.adityabodhankar.mobileapp;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class AddProductActivity extends AppCompatActivity {
 

@@ -46,38 +46,36 @@
             android:gravity="center"
             android:text="Verification Pending!"
             android:textSize="24sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Verification for your account is pending. Please Click send link below to proceed."
             android:gravity="center"
-            android:textSize="18sp"
-            />
+            android:text="Verification for your account is pending. Please Click send link below to proceed."
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/send_link_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Send Link"
-            android:gravity="center"
-            android:padding="16dp"
-            android:textSize="20sp"
-            android:textColor="@color/white"
             android:layout_marginStart="40dp"
+            android:layout_marginTop="40dp"
             android:layout_marginEnd="40dp"
             android:layout_marginBottom="20dp"
-            android:layout_marginTop="40dp"
             android:background="@drawable/btn_lg_blue"
-            />
+            android:gravity="center"
+            android:padding="16dp"
+            android:text="Send Link"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
 
         <ProgressBar
             android:id="@+id/sign_in_progress"
             style="?android:attr/progressBarStyle"
             android:layout_width="match_parent"
-            android:layout_margin="10dp"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp" />
 
     </LinearLayout>
 
@@ -98,35 +96,32 @@
             android:gravity="center"
             android:text="Check your mail!"
             android:textSize="24sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="We've sent verification mail to your email. Please complete the steps to log in. Once done please re-login."
             android:gravity="center"
-            android:textSize="18sp"
-            />
+            android:text="We've sent verification mail to your email. Please complete the steps to log in. Once done please re-login."
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/login_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Login"
-            android:gravity="center"
-            android:padding="16dp"
-            android:textSize="20sp"
-            android:textColor="@color/white"
             android:layout_marginStart="40dp"
+            android:layout_marginTop="40dp"
             android:layout_marginEnd="40dp"
             android:layout_marginBottom="20dp"
-            android:layout_marginTop="40dp"
             android:background="@drawable/btn_lg_blue"
-            />
+            android:gravity="center"
+            android:padding="16dp"
+            android:text="Login"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
 
 
     </LinearLayout>
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

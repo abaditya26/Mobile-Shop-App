@@ -10,13 +10,13 @@ public class UserModel {
     public UserModel() {
     }
 
-    public UserModel(Map<String, Object> data){
-        this.uid = (String)data.get("uid");
-        this.name = (String)data.get("name");
-        this.email = (String)data.get("email");
-        this.phone = (String)data.get("phone");
-        this.profile = (String)data.get("profile");
-        this.gender = (String)data.get("gender");
+    public UserModel(Map<String, Object> data) {
+        this.uid = (String) data.get("uid");
+        this.name = (String) data.get("name");
+        this.email = (String) data.get("email");
+        this.phone = (String) data.get("phone");
+        this.profile = (String) data.get("profile");
+        this.gender = (String) data.get("gender");
         this.admin = data.get("admin") != "false";
     }
 
@@ -96,7 +96,7 @@ public class UserModel {
         this.admin = admin;
     }
 
-    public Map<String, Object> toMap(){
+    public Map<String, Object> toMap() {
         Map<String, Object> data = new HashMap<>();
         data.put("uid", uid);
         data.put("name", name);

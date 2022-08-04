@@ -2,15 +2,14 @@ package ml.adityabodhankar.mobileapp.Fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -29,6 +28,7 @@ public class ProductsFragment extends Fragment {
     private FirebaseFirestore db;
     private RecyclerView productsRecycler;
     private ArrayList<ProductModel> products;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -45,8 +45,8 @@ public class ProductsFragment extends Fragment {
                             new ProductModel(Objects.requireNonNull(snapshot.getData())));
                 }
                 productsRecycler.setAdapter(new AdminProductAdapter(requireContext(), products));
-            }else{
-                Toast.makeText(requireContext(), "Error:- "+ Objects.requireNonNull(error).getMessage(), Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(requireContext(), "Error:- " + Objects.requireNonNull(error).getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 

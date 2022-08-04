@@ -23,9 +23,9 @@
         android:layout_toStartOf="@+id/admin_category_delete"
         android:layout_toEndOf="@+id/admin_category_image"
         android:gravity="center_vertical"
-        android:textSize="18sp"
         android:padding="10dp"
-        android:text="Category name goes here" />
+        android:text="Category name goes here"
+        android:textSize="18sp" />
 
     <ImageButton
         android:id="@+id/admin_category_delete"

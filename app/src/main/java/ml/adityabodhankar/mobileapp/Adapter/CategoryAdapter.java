@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -51,6 +50,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     public class ViewHolder extends RecyclerView.ViewHolder {
         CircleImageView image;
         TextView title;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             image = itemView.findViewById(R.id.category_image);
@@ -59,17 +59,17 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
 
         public void setData(List<CategoryModel> categories, int position) {
             title.setText(categories.get(position).getTitle());
-            if(!categories.get(position).getImage().equalsIgnoreCase("default")){
+            if (!categories.get(position).getImage().equalsIgnoreCase("default")) {
                 Glide.with(context).load(categories.get(position).getImage()).into(image);
             }
             itemView.setOnClickListener(view -> {
                 ArrayList<ProductModel> products = new ArrayList<>();
                 for (ProductModel p : CommonData.products) {
-                    if(p.getCategory().equalsIgnoreCase(categories.get(position).getId())){
+                    if (p.getCategory().equalsIgnoreCase(categories.get(position).getId())) {
                         products.add(p);
                     }
                 }
-                if(categories.get(position).getId().equalsIgnoreCase("0")){
+                if (categories.get(position).getId().equalsIgnoreCase("0")) {
                     products = CommonData.products;
                 }
                 HomeFragment.productsView.setAdapter(

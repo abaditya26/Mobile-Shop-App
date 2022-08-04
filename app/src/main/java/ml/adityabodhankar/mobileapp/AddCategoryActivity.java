@@ -1,12 +1,5 @@
 package ml.adityabodhankar.mobileapp;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -17,15 +10,16 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import com.bumptech.glide.Glide;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
 import java.util.Objects;
 
@@ -34,14 +28,13 @@ import ml.adityabodhankar.mobileapp.Models.CategoryModel;
 
 public class AddCategoryActivity extends AppCompatActivity {
 
+    boolean isUpdate = false;
     private FirebaseFirestore db;
-
     private EditText categoryNameInp;
     private CircleImageView categoryImage;
     private Uri imageUri;
     private ProgressBar progress;
     private TextView addCategoryBtn;
-    boolean isUpdate = false;
     private CategoryModel categoryData;
 
     @Override
@@ -51,9 +44,10 @@ public class AddCategoryActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar_home);
         toolbar.setTitle(getString(R.string.app_name));
         setSupportActionBar(toolbar);
-        try{
+        try {
             Objects.requireNonNull(getSupportActionBar()).setTitle("Add Category");
-        }catch (Exception ignored){}
+        } catch (Exception ignored) {
+        }
 
         addCategoryBtn = findViewById(R.id.add_category_btn);
         categoryNameInp = findViewById(R.id.category_name_inp);
@@ -67,7 +61,7 @@ public class AddCategoryActivity extends AppCompatActivity {
             Intent intent = new Intent();
             intent.setType("image/*");
             intent.setAction(Intent.ACTION_GET_CONTENT);
-            startActivityForResult(intent,1);
+            startActivityForResult(intent, 1);
         });
 
         addCategoryBtn.setOnClickListener(view -> addCategory());
@@ -76,7 +70,7 @@ public class AddCategoryActivity extends AppCompatActivity {
         Intent intent = getIntent();
         try {
             String id = intent.getStringExtra("categoryId");
-            if(id!=null) {
+            if (id != null) {
                 isUpdate = true;
                 showLoading(true);
                 db.collection("categories").document(id).get()
@@ -97,21 +91,22 @@ public class AddCategoryActivity extends AppCompatActivity {
                             finish();
                         });
             }
-        }catch(Exception ignored){}
+        } catch (Exception ignored) {
+        }
     }
 
     private void addCategory() {
-        if(categoryNameInp.getText().toString().equalsIgnoreCase("")){
+        if (categoryNameInp.getText().toString().equalsIgnoreCase("")) {
             categoryNameInp.setError("Enter Category");
             return;
         }
 
         showLoading(true);
         String categoryName = categoryNameInp.getText().toString();
-        if(isUpdate){
+        if (isUpdate) {
             //perform updating data
             uploadImage(categoryName);
-        }else {
+        } else {
             db.collection("categories").document(categoryName).get()
                     .addOnSuccessListener(documentSnapshot -> {
                         if (documentSnapshot.exists()) {
@@ -133,11 +128,11 @@ public class AddCategoryActivity extends AppCompatActivity {
     }
 
     private void uploadImage(String categoryName) {
-        if(imageUri == null) {
-            if(isUpdate){
+        if (imageUri == null) {
+            if (isUpdate) {
                 //perform updating the name
                 updateData(false, "");
-            }else {
+            } else {
                 AlertDialog.Builder alert = new AlertDialog.Builder(this);
                 alert.setTitle("Warning!")
                         .setMessage("No image selected. Do you want to continue with default image?")
@@ -151,25 +146,25 @@ public class AddCategoryActivity extends AppCompatActivity {
                         });
                 alert.show();
             }
-        }else{
+        } else {
             //add image first
-            StorageReference storageRef = FirebaseStorage.getInstance().getReference().child("categories/"+categoryName+".png");
+            StorageReference storageRef = FirebaseStorage.getInstance().getReference().child("categories/" + categoryName + ".png");
             storageRef.putFile(imageUri).addOnSuccessListener(taskSnapshot -> {
                 Task<Uri> task = Objects.requireNonNull(Objects.requireNonNull(taskSnapshot.getMetadata()).getReference()).getDownloadUrl();
                 task.addOnSuccessListener(uri -> {
-                    String imageUrl=uri.toString();
-                    if(isUpdate){
+                    String imageUrl = uri.toString();
+                    if (isUpdate) {
                         updateData(true, imageUrl);
-                    }else {
+                    } else {
                         addCategoryData(imageUrl);
                     }
                 }).addOnFailureListener(e -> {
                     showLoading(false);
-                    Toast.makeText(this, "Error => "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Error => " + e.getMessage(), Toast.LENGTH_SHORT).show();
                 });
             }).addOnFailureListener(e -> {
                 showLoading(false);
-                Toast.makeText(this, "Error => "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Error => " + e.getMessage(), Toast.LENGTH_SHORT).show();
             });
         }
     }
@@ -194,12 +189,12 @@ public class AddCategoryActivity extends AppCompatActivity {
                 });
     }
 
-    private void showLoading(boolean status){
-        if (status){
+    private void showLoading(boolean status) {
+        if (status) {
             //show loading
             progress.setVisibility(View.VISIBLE);
             addCategoryBtn.setVisibility(View.GONE);
-        }else{
+        } else {
             //hide loading
             progress.setVisibility(View.GONE);
             addCategoryBtn.setVisibility(View.VISIBLE);
@@ -209,7 +204,7 @@ public class AddCategoryActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1 && resultCode == RESULT_OK && data != null && data.getData() != null){
+        if (requestCode == 1 && resultCode == RESULT_OK && data != null && data.getData() != null) {
             imageUri = data.getData();
             Glide.with(this).load(imageUri).into(categoryImage);
         }

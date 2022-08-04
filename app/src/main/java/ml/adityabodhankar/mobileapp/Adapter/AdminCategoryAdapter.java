@@ -13,21 +13,18 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-
 import ml.adityabodhankar.mobileapp.AddCategoryActivity;
 import ml.adityabodhankar.mobileapp.Models.CategoryModel;
 import ml.adityabodhankar.mobileapp.R;
 
 public class AdminCategoryAdapter extends RecyclerView.Adapter<AdminCategoryAdapter.ViewHolder> {
-    private Context context;
     List<CategoryModel> categories;
+    private Context context;
 
     public AdminCategoryAdapter(Context context, List<CategoryModel> categories) {
         this.context = context;
@@ -52,10 +49,11 @@ public class AdminCategoryAdapter extends RecyclerView.Adapter<AdminCategoryAdap
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+        private final FirebaseFirestore db = FirebaseFirestore.getInstance();
         CircleImageView image;
         TextView title;
         ImageButton deleteBtn;
-        private final FirebaseFirestore db = FirebaseFirestore.getInstance();
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
@@ -66,7 +64,7 @@ public class AdminCategoryAdapter extends RecyclerView.Adapter<AdminCategoryAdap
 
         public void setData(List<CategoryModel> categories, int position) {
             title.setText(categories.get(position).getTitle());
-            if (!categories.get(position).getImage().equalsIgnoreCase("default")){
+            if (!categories.get(position).getImage().equalsIgnoreCase("default")) {
                 Glide.with(context).load(categories.get(position).getImage()).into(image);
             }
             deleteBtn.setOnClickListener(view -> {
