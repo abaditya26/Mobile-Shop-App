@@ -46,6 +46,9 @@ public class AddCategoryActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         try {
             Objects.requireNonNull(getSupportActionBar()).setTitle("Add Category");
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            toolbar.setNavigationOnClickListener(view -> finish());
         } catch (Exception ignored) {
         }
 

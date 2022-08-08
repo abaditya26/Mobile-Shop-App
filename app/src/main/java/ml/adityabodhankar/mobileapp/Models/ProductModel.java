@@ -1,9 +1,11 @@
 package ml.adityabodhankar.mobileapp.Models;
 
 import java.util.Map;
+import java.util.Objects;
 
 public class ProductModel {
     private String id, name, image, price, description, category;
+    private boolean pickup;
 
     public ProductModel() {
     }
@@ -15,6 +17,17 @@ public class ProductModel {
         this.price = price;
         this.description = description;
         this.category = category;
+        this.pickup = false;
+    }
+
+    public ProductModel(String id, String name, String image, String price, String description, String category, boolean pickup) {
+        this.id = id;
+        this.name = name;
+        this.image = image;
+        this.price = price;
+        this.description = description;
+        this.category = category;
+        this.pickup = pickup;
     }
 
     public ProductModel(Map<String, Object> data) {
@@ -24,6 +37,15 @@ public class ProductModel {
         this.price = (String) data.get("price");
         this.description = (String) data.get("description");
         this.category = (String) data.get("category");
+        if(data.containsKey("pickup")){
+            try {
+                this.pickup = (boolean) data.get("pickup");
+            }catch (Exception ignored){
+                this.pickup = false;
+            }
+        }else{
+            this.pickup = false;
+        }
     }
 
     public String getCategory() {

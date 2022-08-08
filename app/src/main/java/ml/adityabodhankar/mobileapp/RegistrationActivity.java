@@ -41,18 +41,16 @@ public class RegistrationActivity extends AppCompatActivity {
         window.setStatusBarColor(this.getResources().getColor(R.color.blue_app));
 
         registerBtn = findViewById(R.id.create_user_btn);
-        TextView signInRedirect = findViewById(R.id.sign_in_redirect);
-
         nameInput = findViewById(R.id.register_name);
         emailInput = findViewById(R.id.register_email);
         passwordInput = findViewById(R.id.register_password);
         cPasswordInput = findViewById(R.id.register_c_password);
         phoneInput = findViewById(R.id.register_phone);
-        RadioButton maleBtn = findViewById(R.id.register_male_btn);
-        RadioButton femaleBtn = findViewById(R.id.register_female_btn);
         progress = findViewById(R.id.create_user_progress);
-
+        TextView signInRedirect = findViewById(R.id.sign_in_redirect);
+        RadioButton maleBtn = findViewById(R.id.register_male_btn);
         maleBtn.setOnClickListener(view -> gender = "male");
+        RadioButton femaleBtn = findViewById(R.id.register_female_btn);
         femaleBtn.setOnClickListener(view -> gender = "female");
 
         registerBtn.setOnClickListener(view -> registerUser());
@@ -65,7 +63,6 @@ public class RegistrationActivity extends AppCompatActivity {
 //        firebase
         auth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
-
 
         progress.setVisibility(View.GONE);
         registerBtn.setVisibility(View.VISIBLE);
