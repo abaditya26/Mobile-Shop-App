@@ -1,10 +1,5 @@
 package ml.adityabodhankar.mobileapp;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -13,14 +8,12 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import com.bumptech.glide.Glide;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 
 import java.util.Objects;
 
@@ -57,14 +50,14 @@ public class ProductDescriptionActivity extends AppCompatActivity {
         String id = intent.getStringExtra("id");
         showLoading(true);
         db.collection("products").document(id).addSnapshotListener((value, error) -> {
-            if (value!=null){
+            if (value != null) {
                 if (value.exists()) {
                     ProductModel product = new ProductModel(Objects.requireNonNull(value.getData()));
                     setUi(product);
-                }else{
+                } else {
                     Toast.makeText(this, "Error: Product not found", Toast.LENGTH_SHORT).show();
                 }
-            }else{
+            } else {
                 Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
             }
         });
@@ -79,7 +72,7 @@ public class ProductDescriptionActivity extends AppCompatActivity {
         price.setText(product.getPrice());
         title.setText(product.getName());
         description.setText(product.getDescription());
-        if (!product.getImage().equalsIgnoreCase("default")){
+        if (!product.getImage().equalsIgnoreCase("default")) {
             Glide.with(this).load(product.getImage()).into(image);
         }
 
@@ -96,16 +89,16 @@ public class ProductDescriptionActivity extends AppCompatActivity {
 //        if no add as new product to cart
         showLoading(true);
         String uid = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
-        CartModel cartProduct = new CartModel(product.getId(),product.getName(),
-                product.getImage(),product.getPrice(),1);
+        CartModel cartProduct = new CartModel(product.getId(), product.getName(),
+                product.getImage(), product.getPrice(), 1);
         db.collection("users").document(uid).collection("cart").document(product.getId())
                 .get().addOnSuccessListener(documentSnapshot -> {
-                    if (documentSnapshot.exists()){
+                    if (documentSnapshot.exists()) {
                         //product already exists in cart
                         try {
                             cartProduct.setQuantity((int) ((long) documentSnapshot.get("quantity") + 1));
-                        }catch (Exception e){
-                            System.out.println("error"+e);
+                        } catch (Exception e) {
+                            System.out.println("error" + e);
                             cartProduct.setQuantity(1);
                         }
                     }
@@ -118,17 +111,17 @@ public class ProductDescriptionActivity extends AppCompatActivity {
                                 showLoading(false);
                             });
                 }).addOnFailureListener(e -> {
-                    Toast.makeText(this, "Error : "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Error : " + e.getMessage(), Toast.LENGTH_SHORT).show();
                     showLoading(false);
                 });
     }
 
-    private void showLoading(boolean flag){
-        if (flag){
+    private void showLoading(boolean flag) {
+        if (flag) {
             //show loading
             addToCartBtn.setVisibility(View.GONE);
             loading.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             //hide loading
             addToCartBtn.setVisibility(View.VISIBLE);
             loading.setVisibility(View.GONE);

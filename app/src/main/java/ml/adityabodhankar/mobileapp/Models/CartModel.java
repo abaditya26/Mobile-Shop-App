@@ -1,10 +1,20 @@
 package ml.adityabodhankar.mobileapp.Models;
 
+import java.util.Map;
+
 public class CartModel {
-    private String  productId, productName, productImage, productPrice;
+    private String productId, productName, productImage, productPrice;
     private int quantity;
 
     public CartModel() {
+    }
+
+    public CartModel(Map<String, Object> data){
+        this.productId = (String) data.get("productId");
+        this.productName = (String) data.get("productName");
+        this.productImage = (String) data.get("productImage");
+        this.productPrice = (String) data.get("productPrice");
+        this.quantity = (int) ((long)data.get("quantity"));
     }
 
     public CartModel(String productId, String productName, String productImage, String productPrice, int quantity) {

@@ -1,7 +1,6 @@
 package ml.adityabodhankar.mobileapp.Models;
 
 import java.util.Map;
-import java.util.Objects;
 
 public class ProductModel {
     private String id, name, image, price, description, category;
@@ -37,13 +36,13 @@ public class ProductModel {
         this.price = (String) data.get("price");
         this.description = (String) data.get("description");
         this.category = (String) data.get("category");
-        if(data.containsKey("pickup")){
+        if (data.containsKey("pickup")) {
             try {
                 this.pickup = (boolean) data.get("pickup");
-            }catch (Exception ignored){
+            } catch (Exception ignored) {
                 this.pickup = false;
             }
-        }else{
+        } else {
             this.pickup = false;
         }
     }

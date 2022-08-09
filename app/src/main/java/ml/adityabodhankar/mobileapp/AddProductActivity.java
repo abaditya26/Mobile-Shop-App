@@ -14,25 +14,19 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.bumptech.glide.Glide;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -106,33 +100,33 @@ public class AddProductActivity extends AppCompatActivity {
         showLoading(true);
 
         db.collection("categories").get()
-                        .addOnSuccessListener(snapshots -> {
-                            categories = new ArrayList<>();
-                            categories.add(new CategoryModel("null","None","default"));
-                            for (QueryDocumentSnapshot s : snapshots){
-                                categories.add(new CategoryModel(s.getData()));
-                            }
-                            String[] categoryArray = new String[categories.size()];
-                            for (int i=0;i<categories.size();i++){
-                                categoryArray[i] = categories.get(i).getTitle();
-                            }
-                            ArrayAdapter<String>adapter = new ArrayAdapter<>(this,
-                                    android.R.layout.simple_spinner_item, categoryArray);
-                            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                            dropdown.setAdapter(adapter);
-                            dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                                @Override
-                                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                                    category = categories.get(i).getId();
-                                }
+                .addOnSuccessListener(snapshots -> {
+                    categories = new ArrayList<>();
+                    categories.add(new CategoryModel("null", "None", "default"));
+                    for (QueryDocumentSnapshot s : snapshots) {
+                        categories.add(new CategoryModel(s.getData()));
+                    }
+                    String[] categoryArray = new String[categories.size()];
+                    for (int i = 0; i < categories.size(); i++) {
+                        categoryArray[i] = categories.get(i).getTitle();
+                    }
+                    ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
+                            android.R.layout.simple_spinner_item, categoryArray);
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    dropdown.setAdapter(adapter);
+                    dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                            category = categories.get(i).getId();
+                        }
 
-                                @Override
-                                public void onNothingSelected(AdapterView<?> adapterView) {
-                                }
-                            });
-                            checkForIsUpdate();
-                        }).addOnFailureListener(e -> {
-                        });
+                        @Override
+                        public void onNothingSelected(AdapterView<?> adapterView) {
+                        }
+                    });
+                    checkForIsUpdate();
+                }).addOnFailureListener(e -> {
+                });
 
     }
 
@@ -141,13 +135,13 @@ public class AddProductActivity extends AppCompatActivity {
         Intent intent = getIntent();
         try {
             String id = intent.getStringExtra("productId");
-            if(id != null){
+            if (id != null) {
                 isUpdate = true;
                 showLoading(true);
                 db.collection("products").document(id).get()
                         .addOnSuccessListener(snap -> {
                             showLoading(false);
-                            if (snap.exists()){
+                            if (snap.exists()) {
                                 productData = new ProductModel(Objects.requireNonNull(snap.getData()));
                                 if (productData.getImage().equalsIgnoreCase("default")) {
                                     Glide.with(this).load(productData.getImage()).into(productImage);
@@ -155,45 +149,45 @@ public class AddProductActivity extends AppCompatActivity {
                                 productName.setText(productData.getName());
                                 productPrice.setText(productData.getPrice());
                                 productDescription.setText(productData.getDescription());
-                                for (int i=0;i<categories.size();i++){
-                                    if (categories.get(i).getId().equalsIgnoreCase(productData.getCategory())){
+                                for (int i = 0; i < categories.size(); i++) {
+                                    if (categories.get(i).getId().equalsIgnoreCase(productData.getCategory())) {
                                         dropdown.setSelection(i);
                                     }
                                 }
-                            }else{
+                            } else {
                                 Toast.makeText(this, "Unable to load data", Toast.LENGTH_SHORT).show();
                                 finish();
                             }
-                        }).addOnFailureListener( e -> {
+                        }).addOnFailureListener(e -> {
                             Toast.makeText(this, "Unable to load the data", Toast.LENGTH_SHORT).show();
                             finish();
                         });
             }
-        }catch (Exception ignored){
+        } catch (Exception ignored) {
 
         }
     }
 
     private void addProduct() {
-        if (!validateData()){
+        if (!validateData()) {
             finish();
             return;
         }
         showLoading(true);
         String productName = this.productName.getText().toString();
-        if(isUpdate){
+        if (isUpdate) {
             uploadImage(productName);
-        }else{
+        } else {
             db.collection("products").document(productName).get()
                     .addOnSuccessListener(snap -> {
-                        if (snap.exists()){
+                        if (snap.exists()) {
                             showLoading(false);
                             AlertDialog.Builder alert = new AlertDialog.Builder(this);
                             alert.setCancelable(false)
                                     .setTitle("Error")
                                     .setMessage("Product with same name/ID exists")
                                     .setPositiveButton("OK", (dialogInterface, i) -> dialogInterface.dismiss()).show();
-                        }else{
+                        } else {
                             uploadImage(productName);
                         }
                     }).addOnFailureListener(e -> {
@@ -206,19 +200,19 @@ public class AddProductActivity extends AppCompatActivity {
 
 
     private boolean validateData() {
-        if (productName.getText().toString().equalsIgnoreCase("")){
+        if (productName.getText().toString().equalsIgnoreCase("")) {
             productName.setError("Required Field");
             return false;
         }
-        if (productPrice.getText().toString().equalsIgnoreCase("")){
+        if (productPrice.getText().toString().equalsIgnoreCase("")) {
             productPrice.setError("Required Field");
             return false;
         }
-        if (productDescription.getText().toString().equalsIgnoreCase("")){
+        if (productDescription.getText().toString().equalsIgnoreCase("")) {
             productDescription.setError("Required Field");
             return false;
         }
-        if (category.equalsIgnoreCase("")){
+        if (category.equalsIgnoreCase("")) {
             Toast.makeText(this, "Category Needed", Toast.LENGTH_SHORT).show();
             return false;
         }
@@ -267,7 +261,7 @@ public class AddProductActivity extends AppCompatActivity {
         }
     }
 
-    private void addProductData(String imageUrl){
+    private void addProductData(String imageUrl) {
         ProductModel product = new ProductModel(productName.getText().toString(),
                 productName.getText().toString(),
                 imageUrl,
