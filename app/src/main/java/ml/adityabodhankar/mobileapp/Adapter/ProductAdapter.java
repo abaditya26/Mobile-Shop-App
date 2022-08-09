@@ -1,6 +1,7 @@
 package ml.adityabodhankar.mobileapp.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 
 import ml.adityabodhankar.mobileapp.Models.ProductModel;
+import ml.adityabodhankar.mobileapp.ProductDescriptionActivity;
 import ml.adityabodhankar.mobileapp.R;
 
 public class ProductAdapter extends ArrayAdapter<ProductModel> {
@@ -44,6 +46,9 @@ public class ProductAdapter extends ArrayAdapter<ProductModel> {
             Glide.with(getContext()).load(product.getImage()).into(image);
         }
         itemView.setOnClickListener(view -> {
+            Intent intent = new Intent(getContext(), ProductDescriptionActivity.class);
+            intent.putExtra("id", product.getId());
+            getContext().startActivity(intent);
         });
         return itemView;
     }

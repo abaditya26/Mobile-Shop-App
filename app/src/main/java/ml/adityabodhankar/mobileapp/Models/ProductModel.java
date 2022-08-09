@@ -95,4 +95,12 @@ public class ProductModel {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public boolean isPickup() {
+        return pickup;
+    }
+
+    public void setPickup(boolean pickup) {
+        this.pickup = pickup;
+    }
 }
