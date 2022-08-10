@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,6 +40,9 @@ public class CartFragment extends Fragment {
     private RecyclerView cartView;
     private TextView total;
     double cartTotal = 0.0;
+    private LinearLayout noProductView;
+    private RelativeLayout mainCartView;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -47,6 +52,10 @@ public class CartFragment extends Fragment {
         db = FirebaseFirestore.getInstance();
         cartProducts = new ArrayList<>();
         total = view.findViewById(R.id.cart_total);
+        noProductView = view.findViewById(R.id.cart_no_products);
+        mainCartView = view.findViewById(R.id.main_cart_layout);
+        noProductView.setVisibility(View.GONE);
+        mainCartView.setVisibility(View.VISIBLE);
         cartView = view.findViewById(R.id.cart_recycler_view);
         cartView.setLayoutManager(new LinearLayoutManager(requireContext()));
 
@@ -55,8 +64,11 @@ public class CartFragment extends Fragment {
                     if (value != null){
                         cartProducts.clear();
                         cartTotal = 0;
+                        mainCartView.setVisibility(View.VISIBLE);
+                        noProductView.setVisibility(View.GONE);
                         for (QueryDocumentSnapshot snap : value){
-                            cartTotal += ((long)snap.get("quantity") * Double.parseDouble((String) Objects.requireNonNull(snap.get("productPrice"))));
+                            cartTotal += ((long)snap.get("quantity") *
+                                    Double.parseDouble((String) Objects.requireNonNull(snap.get("productPrice"))));
                             cartProducts.add(new CartModel(snap.getData()));
                         }
                         //set UI
@@ -65,11 +77,16 @@ public class CartFragment extends Fragment {
                         Toast.makeText(requireContext(), "Error to get data from DB", Toast.LENGTH_SHORT).show();
                     }
                 });
-        view.findViewById(R.id.checkout_btn).setOnClickListener(view1 -> startActivity(new Intent(requireContext(), CheckoutActivity.class)));
+        view.findViewById(R.id.checkout_btn).setOnClickListener(view1 ->
+                startActivity(new Intent(requireContext(), CheckoutActivity.class)));
         return view;
     }
 
     private void setUI() {
+        if (cartProducts.size() == 0){
+            mainCartView.setVisibility(View.GONE);
+            noProductView.setVisibility(View.VISIBLE);
+        }
         final DecimalFormat df = new DecimalFormat("0.00");
         total.setText("Rs."+df.format(cartTotal));
         cartView.setAdapter(new CartAdapter(getContext(), cartProducts));

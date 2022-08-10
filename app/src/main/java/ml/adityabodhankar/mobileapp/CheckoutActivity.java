@@ -104,9 +104,11 @@ public class CheckoutActivity extends AppCompatActivity {
         }
         showLoading(true);
         OrderModel order = new OrderModel("", Objects.requireNonNull(auth.getCurrentUser()).getUid(),
-                nameInp.getText().toString(), phoneInp.getText().toString(), houseNumberInp.getText().toString(),
-                streetInp.getText().toString(), landmarkInp.getText().toString(), cityInp.getText().toString(),
-                pinCodeInp.getText().toString(), total);
+                cartProducts.get(0).getProductName() + " + " +(cartProducts.size()-1 ==  0 ?
+                        "" : cartProducts.size()-1), cartProducts.get(0).getProductImage(),
+                "Order Received", nameInp.getText().toString(), phoneInp.getText().toString(),
+                houseNumberInp.getText().toString(), streetInp.getText().toString(), landmarkInp.getText().toString(),
+                cityInp.getText().toString(), pinCodeInp.getText().toString(), total);
         db.collection("orders").add(order)
                 .addOnSuccessListener(documentReference -> {
                     order.setOrderId(documentReference.getId());
@@ -117,13 +119,13 @@ public class CheckoutActivity extends AppCompatActivity {
                                     db.collection("orders").document(documentReference.getId())
                                             .collection("products").document(product.getProductId())
                                             .set(product).addOnSuccessListener(unused1 -> {
-                                                updateUI(documentReference.getId());
                                                 count++;
+                                                updateUI(documentReference.getId());
                                             }).addOnFailureListener(e -> {
                                                 //remove all the order details added
                                                 isError = true;
-                                                updateUI(documentReference.getId());
                                                 count++;
+                                                updateUI(documentReference.getId());
                                             });
                                 }
                             }).addOnFailureListener(e1 -> {
@@ -144,6 +146,13 @@ public class CheckoutActivity extends AppCompatActivity {
             db.collection("orders").document(productId).delete();
             Toast.makeText(this, "Unable to save product", Toast.LENGTH_SHORT).show();
         }else{
+            db.collection("users").document(auth.getCurrentUser().getUid()).collection("cart").get()
+                            .addOnSuccessListener(snapshots -> {
+                                for (DocumentSnapshot s : snapshots){
+                                    db.collection("users").document(auth.getCurrentUser().getUid()).collection("cart")
+                                            .document(s.getId()).delete();
+                                }
+                            });
             Toast.makeText(this, "Order Saved. Proceed Checkout.", Toast.LENGTH_SHORT).show();
         }
         showLoading(false);

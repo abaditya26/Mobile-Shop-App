@@ -1,16 +1,39 @@
 package ml.adityabodhankar.mobileapp.Models;
 
+import java.util.Map;
+
 public class OrderModel {
-    private String orderId, uid, name, phone, addressHouseNo, addressStreet, addressLandmark, addressCity, addressPinCode;
+    private String orderId, uid, orderTitle, orderImage, orderStatus, name, phone, addressHouseNo, addressStreet, addressLandmark, addressCity, addressPinCode;
     private double orderTotal;
     private String paymentId;
     private boolean isPaid = false;
 
-    public OrderModel(String orderId, String uid, String name, String phone, String addressHouseNo,
+    public OrderModel(Map<String, Object> data){
+        this.orderId = (String) data.get("orderId");
+        this.uid = (String) data.get("uid");
+        this.orderTitle = (String) data.get("orderTitle");
+        this.orderImage = (String) data.get("orderImage");
+        this.orderStatus = (String) data.get("orderStatus");
+        this.name = (String) data.get("name");
+        this.phone = (String) data.get("phone");
+        this.addressHouseNo = (String) data.get("addressHouseNo");
+        this.addressStreet = (String) data.get("addressStreet");
+        this.addressLandmark = (String) data.get("addressLandmark");
+        this.addressCity = (String) data.get("addressCity");
+        this.addressPinCode = (String) data.get("addressPinCode");
+        this.orderTotal = (double) data.get("orderTotal");
+        this.isPaid = (boolean) data.get("paid");
+        this.paymentId = (String) data.get("paymentId");
+    }
+
+    public OrderModel(String orderId, String uid, String orderTitle, String orderImage, String orderStatus, String name, String phone, String addressHouseNo,
                       String addressStreet, String addressLandmark, String addressCity,
                       String addressPinCode, double orderTotal) {
         this.orderId = orderId;
         this.uid = uid;
+        this.orderTitle = orderTitle;
+        this.orderImage = orderImage;
+        this.orderStatus = orderStatus;
         this.name = name;
         this.phone = phone;
         this.addressHouseNo = addressHouseNo;
@@ -20,10 +43,34 @@ public class OrderModel {
         this.addressPinCode = addressPinCode;
         this.orderTotal = orderTotal;
         this.isPaid = false;
-        paymentId = "";
+        this.paymentId = "";
     }
 
     public OrderModel() {
+    }
+
+    public String getOrderImage() {
+        return orderImage;
+    }
+
+    public void setOrderImage(String orderImage) {
+        this.orderImage = orderImage;
+    }
+
+    public String getOrderTitle() {
+        return orderTitle;
+    }
+
+    public void setOrderTitle(String orderTitle) {
+        this.orderTitle = orderTitle;
+    }
+
+    public String getOrderStatus() {
+        return orderStatus;
+    }
+
+    public void setOrderStatus(String orderStatus) {
+        this.orderStatus = orderStatus;
     }
 
     public boolean isPaid() {
