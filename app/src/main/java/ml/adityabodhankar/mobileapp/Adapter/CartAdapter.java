@@ -1,5 +1,6 @@
 package ml.adityabodhankar.mobileapp.Adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,13 +13,12 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.DecimalFormat;
 import java.util.List;
+import java.util.Objects;
 
 import ml.adityabodhankar.mobileapp.Models.CartModel;
 import ml.adityabodhankar.mobileapp.R;
@@ -71,6 +71,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder>{
             increaseQuantity = itemView.findViewById(R.id.add_qty);
         }
 
+        @SuppressLint("SetTextI18n")
         public void setData(List<CartModel> cartProducts, int position) {
             productName.setText(cartProducts.get(position).getProductName());
             productPrice.setText("Rs."+cartProducts.get(position).getProductPrice());
@@ -81,30 +82,30 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder>{
             if (!cartProducts.get(position).getProductImage().equalsIgnoreCase("default")){
                 Glide.with(context).load(cartProducts.get(position).getProductImage()).into(productImage);
             }
-            deleteProductBtn.setOnClickListener(view -> db.collection("users").document(auth.getCurrentUser().getUid())
+            deleteProductBtn.setOnClickListener(view -> db.collection("users").document(Objects.requireNonNull(auth.getCurrentUser()).getUid())
                     .collection("cart").document(cartProducts.get(position).getProductId())
-                    .delete().addOnSuccessListener(unused -> Toast.makeText(context, "Product Removed From Cart", Toast.LENGTH_SHORT).show())
+                    .delete()
                     .addOnFailureListener(e -> Toast.makeText(context, "Unable to remove from cart.", Toast.LENGTH_SHORT).show()));
             reduceQuantity.setOnClickListener(view -> {
                 if (cartProducts.get(position).getQuantity() > 1) {
                     cartProducts.get(position).setQuantity(cartProducts.get(position).getQuantity() - 1);
-                    db.collection("users").document(auth.getCurrentUser().getUid())
+                    db.collection("users").document(Objects.requireNonNull(auth.getCurrentUser()).getUid())
                             .collection("cart").document(cartProducts.get(position).getProductId())
-                            .set(cartProducts.get(position)).addOnSuccessListener(unused -> Toast.makeText(context, "Quantity Reduced", Toast.LENGTH_SHORT).show()).
-                            addOnFailureListener(e -> Toast.makeText(context, "Unable to reduce quantity", Toast.LENGTH_SHORT).show());
+                            .set(cartProducts.get(position))
+                            .addOnFailureListener(e -> Toast.makeText(context, "Unable to reduce quantity", Toast.LENGTH_SHORT).show());
                 }else{
-                    db.collection("users").document(auth.getCurrentUser().getUid())
+                    db.collection("users").document(Objects.requireNonNull(auth.getCurrentUser()).getUid())
                             .collection("cart").document(cartProducts.get(position).getProductId())
-                            .delete().addOnSuccessListener(unused -> Toast.makeText(context, "Product Removed From Cart", Toast.LENGTH_SHORT).show())
+                            .delete()
                             .addOnFailureListener(e -> Toast.makeText(context, "Unable to remove from cart.", Toast.LENGTH_SHORT).show());
                 }
             });
             increaseQuantity.setOnClickListener(view -> {
                 cartProducts.get(position).setQuantity(cartProducts.get(position).getQuantity() + 1);
-                db.collection("users").document(auth.getCurrentUser().getUid())
+                db.collection("users").document(Objects.requireNonNull(auth.getCurrentUser()).getUid())
                         .collection("cart").document(cartProducts.get(position).getProductId())
-                        .set(cartProducts.get(position)).addOnSuccessListener(unused -> Toast.makeText(context, "Quantity Increased", Toast.LENGTH_SHORT).show()).
-                        addOnFailureListener(e -> Toast.makeText(context, "Unable to increase quantity", Toast.LENGTH_SHORT).show());
+                        .set(cartProducts.get(position))
+                        .addOnFailureListener(e -> Toast.makeText(context, "Unable to increase quantity", Toast.LENGTH_SHORT).show());
             });
         }
     }
