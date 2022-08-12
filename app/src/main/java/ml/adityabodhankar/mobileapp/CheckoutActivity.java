@@ -106,7 +106,7 @@ public class CheckoutActivity extends AppCompatActivity {
         OrderModel order = new OrderModel("", Objects.requireNonNull(auth.getCurrentUser()).getUid(),
                 cartProducts.get(0).getProductName() + " + " +(cartProducts.size()-1 ==  0 ?
                         "" : cartProducts.size()-1), cartProducts.get(0).getProductImage(),
-                "Order Received", nameInp.getText().toString(), phoneInp.getText().toString(),
+                "Payment Pending", nameInp.getText().toString(), phoneInp.getText().toString(),
                 houseNumberInp.getText().toString(), streetInp.getText().toString(), landmarkInp.getText().toString(),
                 cityInp.getText().toString(), pinCodeInp.getText().toString(), total);
         db.collection("orders").add(order)

@@ -47,12 +47,7 @@ public class OrderFragment extends Fragment {
                     if (value != null) {
                         orders.clear();
                         for (QueryDocumentSnapshot snapshot : value){
-                            try {
-                                if ((boolean) snapshot.get("paid")) {
-                                    orders.add(new OrderModel(snapshot.getData()));
-                                }
-                            }catch (Exception ignored){
-                            }
+                            orders.add(new OrderModel(snapshot.getData()));
                         }
                         //setUI
                         orderRecyclerView.setAdapter(new UserOrderAdapter(getContext(), orders));

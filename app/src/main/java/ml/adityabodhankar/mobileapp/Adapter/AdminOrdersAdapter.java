@@ -1,6 +1,7 @@
 package ml.adityabodhankar.mobileapp.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,15 +15,16 @@ import com.bumptech.glide.Glide;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import ml.adityabodhankar.mobileapp.AdminOrderDetailsActivity;
 import ml.adityabodhankar.mobileapp.Models.OrderModel;
 import ml.adityabodhankar.mobileapp.R;
 
-public class UserOrderAdapter extends RecyclerView.Adapter<UserOrderAdapter.ViewHolder> {
+public class AdminOrdersAdapter extends RecyclerView.Adapter<AdminOrdersAdapter.ViewHolder> {
     private final Context context;
     private final List<OrderModel> orders;
 
 
-    public UserOrderAdapter(Context context, List<OrderModel> orders) {
+    public AdminOrdersAdapter(Context context, List<OrderModel> orders) {
         this.context = context;
         this.orders = orders;
     }
@@ -60,6 +62,12 @@ public class UserOrderAdapter extends RecyclerView.Adapter<UserOrderAdapter.View
             if (!orderData.getOrderImage().equalsIgnoreCase("default")){
                 Glide.with(context).load(orderData.getOrderImage()).into(image);
             }
+
+            itemView.setOnClickListener(view -> {
+                Intent intent = new Intent(context, AdminOrderDetailsActivity.class);
+                intent.putExtra("id", orderData.getOrderId());
+                context.startActivity(intent);
+            });
         }
     }
 }
