@@ -51,7 +51,7 @@
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
-                        android:text="TextView" />
+                        android:text="" />
                 </TableRow>
 
                 <TableRow
@@ -70,7 +70,7 @@
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
-                        android:text="TextView" />
+                        android:text="" />
                 </TableRow>
 
                 <TableRow
@@ -89,7 +89,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="TextView" />
+                        android:text="" />
                 </TableRow>
 
                 <TableRow
@@ -108,7 +108,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="TextView" />
+                        android:text="" />
                 </TableRow>
 
                 <TableRow
@@ -127,7 +127,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="TextView" />
+                        android:text="" />
                 </TableRow>
 
                 <TableRow
@@ -146,7 +146,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="TextView" />
+                        android:text="" />
                 </TableRow>
 
                 <TableRow
@@ -165,7 +165,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="TextView" />
+                        android:text="" />
                 </TableRow>
 
                 <TableRow
@@ -184,7 +184,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="TextView" />
+                        android:text="" />
                 </TableRow>
 
                 <TableRow
@@ -203,7 +203,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="TextView" />
+                        android:text="" />
                 </TableRow>
 
                 <TableRow
@@ -222,15 +222,73 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="TextView" />
+                        android:text="" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" >
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        android:layout_weight="1"
+                        android:text="Order Status" />
+
+                    <TextView
+                        android:id="@+id/order_status"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" >
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        android:layout_weight="1"
+                        android:text="Payment ID" />
+
+                    <TextView
+                        android:id="@+id/payment_id"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="" />
                 </TableRow>
 
             </TableLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#878787"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/admin_order_products"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/update_status_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_lg_blue"
+                android:gravity="center"
+                android:padding="16dp"
+                android:layout_margin="10dp"
+                android:text="Update Status"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
 
         </LinearLayout>
 

@@ -30,7 +30,8 @@ import ml.adityabodhankar.mobileapp.Models.OrderModel;
 public class AdminOrderDetailsActivity extends AppCompatActivity {
 
     private FirebaseFirestore db;
-    private TextView orderId, orderName, orderTotal, cName, cPhoneNo, cAddress, cCity, cPinCode, totalProductsView, totalQuantityView;
+    private TextView orderId, orderName, orderTotal, cName, cPhoneNo, cAddress, cCity, cPinCode,
+            totalProductsView, totalQuantityView, orderStatus, paymentId;
     private RecyclerView adminOrdersProductsRecycler;
     private int totalQuantity;
 
@@ -68,6 +69,8 @@ public class AdminOrderDetailsActivity extends AppCompatActivity {
         cCity = findViewById(R.id.c_city);
         cPinCode = findViewById(R.id.c_pin_code);
         totalProductsView = findViewById(R.id.total_products);
+        orderStatus = findViewById(R.id.order_status);
+        paymentId = findViewById(R.id.payment_id);
         adminOrdersProductsRecycler = findViewById(R.id.admin_order_products);
         totalQuantityView = findViewById(R.id.total_quantity);
         adminOrdersProductsRecycler.setLayoutManager(new LinearLayoutManager(this));
@@ -77,7 +80,8 @@ public class AdminOrderDetailsActivity extends AppCompatActivity {
                     if (value != null){
                         OrderModel orderData = new OrderModel(Objects.requireNonNull(value.getData()));
                         List<CartModel> orderProducts = new ArrayList<>();
-                        db.collection("orders").document(intent.getStringExtra("id")).collection("products")
+                        db.collection("orders").document(intent.getStringExtra("id"))
+                                .collection("products")
                                         .addSnapshotListener((value1, error1) -> {
                                             if (value1 != null){
                                                 orderProducts.clear();
@@ -88,7 +92,8 @@ public class AdminOrderDetailsActivity extends AppCompatActivity {
                                                 }
                                                 setData(orderData, orderProducts);
                                             }else{
-                                                Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(this, "Error",
+                                                        Toast.LENGTH_SHORT).show();
                                             }
                                         });
                     }else{
@@ -104,11 +109,14 @@ public class AdminOrderDetailsActivity extends AppCompatActivity {
         orderTotal.setText(""+orderData.getOrderTotal());
         cName.setText(orderData.getName());
         cPhoneNo.setText(orderData.getPhone());
-        cAddress.setText(orderData.getAddressHouseNo() + ", "+orderData.getAddressLandmark() + ", "+ orderData.getAddressStreet());
+        cAddress.setText(orderData.getAddressHouseNo() + ", "+
+                orderData.getAddressLandmark() + ", "+ orderData.getAddressStreet());
         cCity.setText(orderData.getAddressCity());
         cPinCode.setText(orderData.getAddressPinCode());
         adminOrdersProductsRecycler.setAdapter(new CheckoutCartAdapter(this, orderProducts));
         totalQuantityView.setText(""+totalQuantity);
         totalProductsView.setText(orderProducts.size()+"");
+        orderStatus.setText(orderData.getOrderStatus());
+        paymentId.setText(orderData.getPaymentId());
     }
 }
