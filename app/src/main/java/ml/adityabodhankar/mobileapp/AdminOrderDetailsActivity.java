@@ -48,8 +48,7 @@ public class AdminOrderDetailsActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
             toolbar.setNavigationOnClickListener(view -> finish());
-        } catch (Exception ignored) {
-        }
+        } catch (Exception ignored) {}
 
         Intent intent = getIntent();
         if (intent.getStringExtra("id") == null){

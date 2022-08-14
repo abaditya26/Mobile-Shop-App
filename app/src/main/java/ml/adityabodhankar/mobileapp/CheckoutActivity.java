@@ -6,7 +6,9 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -20,16 +22,23 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.razorpay.Checkout;
+import com.razorpay.PayloadHelper;
+import com.razorpay.PaymentResultListener;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import ml.adityabodhankar.mobileapp.Adapter.CheckoutCartAdapter;
 import ml.adityabodhankar.mobileapp.Models.CartModel;
 import ml.adityabodhankar.mobileapp.Models.OrderModel;
 
-public class CheckoutActivity extends AppCompatActivity {
+public class CheckoutActivity extends AppCompatActivity  implements PaymentResultListener {
 
     private EditText houseNumberInp, streetInp, landmarkInp, cityInp, pinCodeInp, nameInp, phoneInp;
     private TextView totalPrice, payNowBtn;
@@ -41,6 +50,7 @@ public class CheckoutActivity extends AppCompatActivity {
     private ProgressBar progress;
     private boolean isError = false;
     int count = 0;
+    OrderModel order;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +67,9 @@ public class CheckoutActivity extends AppCompatActivity {
         } catch (Exception ignored) {
         }
 
+        Checkout checkout = new Checkout();
+        checkout.setKeyID("rzp_test_TSGAedRjSmh7mX");
+        Checkout.preload(getApplicationContext());
 
         auth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
@@ -103,7 +116,7 @@ public class CheckoutActivity extends AppCompatActivity {
             return;
         }
         showLoading(true);
-        OrderModel order = new OrderModel("", Objects.requireNonNull(auth.getCurrentUser()).getUid(),
+        order = new OrderModel("", Objects.requireNonNull(auth.getCurrentUser()).getUid(),
                 cartProducts.get(0).getProductName() + " + " +(cartProducts.size()-1 ==  0 ?
                         "" : cartProducts.size()-1), cartProducts.get(0).getProductImage(),
                 "Payment Pending", nameInp.getText().toString(), phoneInp.getText().toString(),
@@ -146,16 +159,20 @@ public class CheckoutActivity extends AppCompatActivity {
             db.collection("orders").document(productId).delete();
             Toast.makeText(this, "Unable to save product", Toast.LENGTH_SHORT).show();
         }else{
-            db.collection("users").document(auth.getCurrentUser().getUid()).collection("cart").get()
-                            .addOnSuccessListener(snapshots -> {
-                                for (DocumentSnapshot s : snapshots){
-                                    db.collection("users").document(auth.getCurrentUser().getUid()).collection("cart")
-                                            .document(s.getId()).delete();
-                                }
-                            });
-            Toast.makeText(this, "Order Saved. Proceed Checkout.", Toast.LENGTH_SHORT).show();
+            startPayment();
         }
         showLoading(false);
+    }
+
+
+     void deleteCart(){
+        db.collection("users").document(auth.getCurrentUser().getUid()).collection("cart").get()
+                .addOnSuccessListener(snapshots -> {
+                    for (DocumentSnapshot s : snapshots){
+                        db.collection("users").document(auth.getCurrentUser().getUid()).collection("cart")
+                                .document(s.getId()).delete();
+                    }
+                });
     }
 
     private boolean validateInput() {
@@ -199,5 +216,56 @@ public class CheckoutActivity extends AppCompatActivity {
             progress.setVisibility(View.GONE);
             payNowBtn.setVisibility(View.VISIBLE);
         }
+    }
+
+    public void startPayment() {
+        Checkout checkout = new Checkout();
+        checkout.setKeyID("rzp_test_TSGAedRjSmh7mX");
+        checkout.setImage(R.mipmap.ic_launcher_round);
+        final Activity activity = this;
+
+        try {
+            JSONObject options = new JSONObject();
+
+            options.put("name", order.getName());
+            options.put("description", "Reference No. #"+order.getOrderTitle());
+            options.put("image", "https://s3.amazonaws.com/rzp-mobile/images/rzp.jpg");
+//            options.put("order_id", order.getOrderId());//from response of step 3.
+            options.put("theme.color", "#3399cc");
+            options.put("currency", "INR");
+            options.put("amount", (int)(order.getOrderTotal() * 100));//pass amount in currency subunits
+            options.put("prefill.email", auth.getCurrentUser().getEmail());
+            options.put("prefill.contact",order.getPhone());
+            JSONObject retryObj = new JSONObject();
+            retryObj.put("enabled", true);
+            retryObj.put("max_count", 3);
+            options.put("retry", retryObj);
+
+            checkout.open(activity, options);
+
+        } catch(Exception e) {
+            Log.e("TAG", "Error in starting Razorpay Checkout", e);
+        }
+    }
+
+    @Override
+    public void onPaymentSuccess(String paymentId) {
+        Toast.makeText(this, "Payment ID :- "+paymentId, Toast.LENGTH_SHORT).show();
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("orderStatus", "Order Received");
+        map.put("paid", true);
+        map.put("paymentId", paymentId);
+        db.collection("orders").document(order.getOrderId()).update(map);
+        deleteCart();
+        Toast.makeText(this, "Payment Success", Toast.LENGTH_SHORT).show();
+        finish();
+    }
+
+    @Override
+    public void onPaymentError(int i, String s) {
+        Toast.makeText(this, "Payment Failed", Toast.LENGTH_SHORT).show();
+        Log.e("ERR", s);
+        finish();
     }
 }
