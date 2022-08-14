@@ -228,7 +228,7 @@ public class CheckoutActivity extends AppCompatActivity  implements PaymentResul
             JSONObject options = new JSONObject();
 
             options.put("name", order.getName());
-            options.put("description", "Reference No. #"+order.getOrderTitle());
+            options.put("description", "Reference No. #"+order.getOrderId());
             options.put("image", "https://s3.amazonaws.com/rzp-mobile/images/rzp.jpg");
 //            options.put("order_id", order.getOrderId());//from response of step 3.
             options.put("theme.color", "#3399cc");
@@ -250,8 +250,6 @@ public class CheckoutActivity extends AppCompatActivity  implements PaymentResul
 
     @Override
     public void onPaymentSuccess(String paymentId) {
-        Toast.makeText(this, "Payment ID :- "+paymentId, Toast.LENGTH_SHORT).show();
-
         Map<String, Object> map = new HashMap<>();
         map.put("orderStatus", "Order Received");
         map.put("paid", true);
