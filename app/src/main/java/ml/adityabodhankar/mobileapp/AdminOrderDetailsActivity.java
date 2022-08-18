@@ -31,7 +31,7 @@ public class AdminOrderDetailsActivity extends AppCompatActivity {
 
     private FirebaseFirestore db;
     private TextView orderId, orderName, orderTotal, cName, cPhoneNo, cAddress, cCity, cPinCode,
-            totalProductsView, totalQuantityView, orderStatus, paymentId;
+            totalProductsView, totalQuantityView, orderStatus, paymentId, updateStatusBtn;
     private RecyclerView adminOrdersProductsRecycler;
     private int totalQuantity;
 
@@ -73,6 +73,13 @@ public class AdminOrderDetailsActivity extends AppCompatActivity {
         adminOrdersProductsRecycler = findViewById(R.id.admin_order_products);
         totalQuantityView = findViewById(R.id.total_quantity);
         adminOrdersProductsRecycler.setLayoutManager(new LinearLayoutManager(this));
+
+        updateStatusBtn = findViewById(R.id.update_status_btn);
+        updateStatusBtn.setOnClickListener(view -> {
+            Intent i = new Intent(this, UpdateStatusActivity.class);
+            i.putExtra("id",intent.getStringExtra("id"));
+            startActivity(i);
+        });
 
         db.collection("orders").document(intent.getStringExtra("id"))
                 .addSnapshotListener((value, error) -> {

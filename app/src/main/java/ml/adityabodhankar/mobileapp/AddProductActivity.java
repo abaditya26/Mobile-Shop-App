@@ -50,7 +50,6 @@ public class AddProductActivity extends AppCompatActivity {
     private boolean isPickup;
     private String category;
     private List<CategoryModel> categories;
-    private Map<String, String> categoriesMap;
     private Spinner dropdown;
 
     @Override

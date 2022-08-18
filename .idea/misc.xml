@@ -50,6 +50,7 @@
         <entry key="app/src/main/res/layout/activity_admin_order_details.xml" value="0.3703125" />
         <entry key="app/src/main/res/layout/activity_checkout.xml" value="0.19114583333333332" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.3703125" />
+        <entry key="app/src/main/res/layout/activity_update_status.xml" value="0.2916666666666667" />
         <entry key="app/src/main/res/layout/fragment_admin_orders.xml" value="0.3703125" />
         <entry key="app/src/main/res/layout/fragment_order.xml" value="0.3703125" />
         <entry key="app/src/main/res/layout/recycler_user_order.xml" value="0.3703125" />
