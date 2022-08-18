@@ -1,9 +1,19 @@
 package ml.adityabodhankar.mobileapp.Models;
 
+import java.util.Map;
+
 public class TrackingModel {
     private String orderId, status, description, dateTime;
 
     public TrackingModel() {
+    }
+
+    public TrackingModel(Map<String, Object> data){
+        this.orderId = (String) data.get("orderId");
+        this.status = (String) data.get("status");
+        this.description = (String) data.get("description");
+        this.dateTime = (String) data.get("dateTime");
+
     }
 
     public TrackingModel(String orderId, String status, String description, String dateTime) {
