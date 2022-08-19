@@ -119,7 +119,6 @@ public class UpdateStatusActivity extends AppCompatActivity {
                         for (QueryDocumentSnapshot snapshot : snapshots){
                             trackingDetails.add(new TrackingModel(snapshot.getData()));
                         }
-
                         //update UI
                         setLoading(false);
                         oldOrdersRecycler.setAdapter(new TrackingAdapter(this, trackingDetails));

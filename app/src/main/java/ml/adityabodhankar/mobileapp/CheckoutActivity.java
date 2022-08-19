@@ -6,6 +6,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
@@ -28,7 +29,9 @@ import com.razorpay.PaymentResultListener;
 
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,6 +40,7 @@ import java.util.Objects;
 import ml.adityabodhankar.mobileapp.Adapter.CheckoutCartAdapter;
 import ml.adityabodhankar.mobileapp.Models.CartModel;
 import ml.adityabodhankar.mobileapp.Models.OrderModel;
+import ml.adityabodhankar.mobileapp.Models.TrackingModel;
 
 public class CheckoutActivity extends AppCompatActivity  implements PaymentResultListener {
 
@@ -117,8 +121,9 @@ public class CheckoutActivity extends AppCompatActivity  implements PaymentResul
         }
         showLoading(true);
         order = new OrderModel("", Objects.requireNonNull(auth.getCurrentUser()).getUid(),
-                cartProducts.get(0).getProductName() + " + " +(cartProducts.size()-1 ==  0 ?
-                        "" : cartProducts.size()-1), cartProducts.get(0).getProductImage(),
+                cartProducts.get(0).getProductName() +
+                        (cartProducts.size()-1 ==  0 ? "" : " + " + (cartProducts.size()-1)),
+                cartProducts.get(0).getProductImage(),
                 "Payment Pending", nameInp.getText().toString(), phoneInp.getText().toString(),
                 houseNumberInp.getText().toString(), streetInp.getText().toString(), landmarkInp.getText().toString(),
                 cityInp.getText().toString(), pinCodeInp.getText().toString(), total);
@@ -254,7 +259,15 @@ public class CheckoutActivity extends AppCompatActivity  implements PaymentResul
         map.put("orderStatus", "Order Received");
         map.put("paid", true);
         map.put("paymentId", paymentId);
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat formatter =
+                new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        Date date = new Date();
+        String currentDate = formatter.format(date);
         db.collection("orders").document(order.getOrderId()).update(map);
+        TrackingModel tracking = new TrackingModel(order.getOrderId(),"Order Placed",
+                "Order Placed",currentDate);
+        db.collection("orders").document(order.getOrderId())
+                .collection("tracking").document(tracking.getDateTime()).set(tracking);
         deleteCart();
         Toast.makeText(this, "Payment Success", Toast.LENGTH_SHORT).show();
         finish();
@@ -263,6 +276,7 @@ public class CheckoutActivity extends AppCompatActivity  implements PaymentResul
     @Override
     public void onPaymentError(int i, String s) {
         Toast.makeText(this, "Payment Failed", Toast.LENGTH_SHORT).show();
+        db.collection("orders").document(order.getOrderId()).delete();
         Log.e("ERR", s);
         finish();
     }
