@@ -47,9 +47,10 @@
         <entry key="..\:/code/android/MobileApp/app/src/main/res/menu/bottom_nav_menu_user.xml" value="0.10989583333333333" />
         <entry key="..\:/code/android/MobileApp/app/src/main/res/menu/dashboard_menu.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_add_product.xml" value="0.3703125" />
-        <entry key="app/src/main/res/layout/activity_admin_order_details.xml" value="0.3703125" />
+        <entry key="app/src/main/res/layout/activity_admin_order_details.xml" value="0.2919369786839666" />
         <entry key="app/src/main/res/layout/activity_checkout.xml" value="0.19114583333333332" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.3703125" />
+        <entry key="app/src/main/res/layout/activity_order_details.xml" value="0.3039760581445062" />
         <entry key="app/src/main/res/layout/activity_update_status.xml" value="0.2916666666666667" />
         <entry key="app/src/main/res/layout/fragment_admin_orders.xml" value="0.3703125" />
         <entry key="app/src/main/res/layout/fragment_order.xml" value="0.3703125" />

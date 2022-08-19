@@ -1,6 +1,7 @@
 package ml.adityabodhankar.mobileapp.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import ml.adityabodhankar.mobileapp.Models.OrderModel;
+import ml.adityabodhankar.mobileapp.OrderDetailsActivity;
 import ml.adityabodhankar.mobileapp.R;
 
 public class UserOrderAdapter extends RecyclerView.Adapter<UserOrderAdapter.ViewHolder> {
@@ -60,6 +62,11 @@ public class UserOrderAdapter extends RecyclerView.Adapter<UserOrderAdapter.View
             if (!orderData.getOrderImage().equalsIgnoreCase("default")){
                 Glide.with(context).load(orderData.getOrderImage()).into(image);
             }
+            itemView.setOnClickListener(view -> {
+                Intent i = new Intent(context, OrderDetailsActivity.class);
+                i.putExtra("id", orderData.getOrderId());
+                context.startActivity(i);
+            });
         }
     }
 }

@@ -91,6 +91,8 @@ public class UpdateStatusActivity extends AppCompatActivity {
 
         oldOrdersRecycler = findViewById(R.id.order_old_status);
         oldOrdersRecycler.setLayoutManager(new LinearLayoutManager(this));
+        oldOrdersRecycler.setNestedScrollingEnabled(false);
+
 
         trackingDetails = new ArrayList<>();
 
@@ -176,6 +178,7 @@ public class UpdateStatusActivity extends AppCompatActivity {
                         updateStatus(status, description);
                         dialogInterface.dismiss();
                     }).setNegativeButton("NO", (dialogInterface, i) -> {
+                        setLoading(false);
                         dialogInterface.dismiss();
                     }).show();
         } else {
