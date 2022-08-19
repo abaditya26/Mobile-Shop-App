@@ -8,7 +8,7 @@ public class OrderModel {
     private String paymentId;
     private boolean isPaid = false;
 
-    public OrderModel(Map<String, Object> data){
+    public OrderModel(Map<String, Object> data) {
         this.orderId = (String) data.get("orderId");
         this.uid = (String) data.get("uid");
         this.orderTitle = (String) data.get("orderTitle");

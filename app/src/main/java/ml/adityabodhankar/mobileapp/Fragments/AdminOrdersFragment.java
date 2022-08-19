@@ -4,23 +4,19 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import ml.adityabodhankar.mobileapp.Adapter.AdminOrdersAdapter;
-import ml.adityabodhankar.mobileapp.Adapter.UserOrderAdapter;
 import ml.adityabodhankar.mobileapp.Models.OrderModel;
 import ml.adityabodhankar.mobileapp.R;
 
@@ -46,17 +42,17 @@ public class AdminOrdersFragment extends Fragment {
                 .addSnapshotListener((value, error) -> {
                     if (value != null) {
                         orders.clear();
-                        for (QueryDocumentSnapshot snapshot : value){
+                        for (QueryDocumentSnapshot snapshot : value) {
                             try {
                                 if ((boolean) snapshot.get("paid")) {
                                     orders.add(new OrderModel(snapshot.getData()));
                                 }
-                            }catch (Exception ignored){
+                            } catch (Exception ignored) {
                             }
                         }
                         //setUI
                         ordersRecyclerView.setAdapter(new AdminOrdersAdapter(getContext(), orders));
-                    }else{
+                    } else {
                         Toast.makeText(requireContext(), "Unable to get the data from cloud", Toast.LENGTH_SHORT).show();
                     }
                 });

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -33,80 +32,74 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Enter Your Address to deliver"
-                android:gravity="center"
-                android:textSize="24sp"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
-                />
+                android:gravity="center"
+                android:text="Enter Your Address to deliver"
+                android:textSize="24sp" />
 
             <EditText
                 android:id="@+id/checkout_address_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Enter Your Name"
-                android:inputType="text"
-                />
+                android:inputType="text" />
 
             <EditText
                 android:id="@+id/checkout_phone_number"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Enter Phone Number"
-                android:inputType="phone"
-                />
+                android:inputType="phone" />
 
             <EditText
                 android:id="@+id/checkout_address_house_no"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text"
                 android:hint="Enter Your House Number"
-                />
+                android:inputType="text" />
 
             <EditText
                 android:id="@+id/checkout_address_street"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Enter Street"
-                android:inputType="text"
-                />
+                android:inputType="text" />
+
             <EditText
                 android:id="@+id/checkout_address_landmark"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Landmark (optional)"
-                android:inputType="text"
-                />
+                android:inputType="text" />
+
             <EditText
                 android:id="@+id/checkout_address_city"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text"
                 android:hint="City"
-                />
+                android:inputType="text" />
+
             <EditText
                 android:id="@+id/checkout_address_pin_code"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Pin code"
-                android:inputType="number"
-                />
+                android:inputType="number" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Your Order Details"
-                android:gravity="center"
-                android:textSize="20sp"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
-                />
+                android:gravity="center"
+                android:text="Your Order Details"
+                android:textSize="20sp" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/checkout_product_list"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -115,23 +108,21 @@
 
                 <TextView
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:text="Total"
+                    android:layout_weight="1"
                     android:gravity="center"
-                    android:textSize="20sp"
-                    />
+                    android:text="Total"
+                    android:textSize="20sp" />
 
                 <TextView
                     android:id="@+id/total_price_checkout"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:text="TotalPrice"
+                    android:layout_weight="1"
                     android:gravity="center"
+                    android:text="TotalPrice"
                     android:textSize="20sp"
-                    android:textStyle="bold"
-                    />
+                    android:textStyle="bold" />
 
             </LinearLayout>
 
@@ -152,8 +143,7 @@
                 android:id="@+id/progress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                />
+                android:layout_margin="10dp" />
 
         </LinearLayout>
 

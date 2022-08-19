@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -26,9 +25,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:paddingStart="10dp"
-            android:paddingEnd="10dp"
-            android:orientation="vertical">
+            android:paddingEnd="10dp">
 
 
             <TableLayout
@@ -37,52 +36,52 @@
 
                 <TableRow
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" >
+                    android:layout_height="match_parent">
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:textStyle="bold"
                         android:layout_weight="1"
-                        android:text="Order ID" />
+                        android:text="Order ID"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/order_id"
                         android:layout_width="0dp"
-                        android:layout_weight="1"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:text="" />
                 </TableRow>
 
                 <TableRow
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" >
+                    android:layout_height="match_parent">
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:textStyle="bold"
                         android:layout_weight="1"
-                        android:text="Order Name" />
+                        android:text="Order Name"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/order_name"
                         android:layout_width="0dp"
-                        android:layout_weight="1"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:text="" />
                 </TableRow>
 
                 <TableRow
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" >
+                    android:layout_height="match_parent">
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:textStyle="bold"
                         android:layout_weight="1"
-                        android:text="Order Total" />
+                        android:text="Order Total"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/order_total"
@@ -94,14 +93,14 @@
 
                 <TableRow
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" >
+                    android:layout_height="match_parent">
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:textStyle="bold"
                         android:layout_weight="1"
-                        android:text="Customer Name" />
+                        android:text="Customer Name"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/c_name"
@@ -113,14 +112,14 @@
 
                 <TableRow
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" >
+                    android:layout_height="match_parent">
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:textStyle="bold"
                         android:layout_weight="1"
-                        android:text="Customer Phone Number" />
+                        android:text="Customer Phone Number"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/c_phone_no"
@@ -132,14 +131,14 @@
 
                 <TableRow
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" >
+                    android:layout_height="match_parent">
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:textStyle="bold"
                         android:layout_weight="1"
-                        android:text="Customer Address" />
+                        android:text="Customer Address"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/c_address"
@@ -151,14 +150,14 @@
 
                 <TableRow
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" >
+                    android:layout_height="match_parent">
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:textStyle="bold"
                         android:layout_weight="1"
-                        android:text="Customer Address City" />
+                        android:text="Customer Address City"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/c_city"
@@ -170,14 +169,14 @@
 
                 <TableRow
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" >
+                    android:layout_height="match_parent">
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:textStyle="bold"
                         android:layout_weight="1"
-                        android:text="Customer Address Pin code" />
+                        android:text="Customer Address Pin code"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/c_pin_code"
@@ -189,14 +188,14 @@
 
                 <TableRow
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" >
+                    android:layout_height="match_parent">
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:textStyle="bold"
                         android:layout_weight="1"
-                        android:text="Total Products" />
+                        android:text="Total Products"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/total_products"
@@ -208,14 +207,14 @@
 
                 <TableRow
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" >
+                    android:layout_height="match_parent">
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:textStyle="bold"
                         android:layout_weight="1"
-                        android:text="Total Product Quantity" />
+                        android:text="Total Product Quantity"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/total_quantity"
@@ -227,14 +226,14 @@
 
                 <TableRow
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" >
+                    android:layout_height="match_parent">
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:textStyle="bold"
                         android:layout_weight="1"
-                        android:text="Order Status" />
+                        android:text="Order Status"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/order_status"
@@ -246,14 +245,14 @@
 
                 <TableRow
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" >
+                    android:layout_height="match_parent">
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:textStyle="bold"
                         android:layout_weight="1"
-                        android:text="Payment ID" />
+                        android:text="Payment ID"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/payment_id"
@@ -268,24 +267,23 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#878787"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
-                />
+                android:background="#878787" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/admin_order_products"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
 
             <TextView
                 android:id="@+id/update_status_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="10dp"
                 android:background="@drawable/btn_lg_blue"
                 android:gravity="center"
                 android:padding="16dp"
-                android:layout_margin="10dp"
                 android:text="Update Status"
                 android:textColor="@color/white"
                 android:textSize="20sp" />

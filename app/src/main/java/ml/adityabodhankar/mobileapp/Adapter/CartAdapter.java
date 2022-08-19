@@ -23,7 +23,7 @@ import java.util.Objects;
 import ml.adityabodhankar.mobileapp.Models.CartModel;
 import ml.adityabodhankar.mobileapp.R;
 
-public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder>{
+public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
 
     private final Context context;
     private final List<CartModel> cartProducts;
@@ -74,12 +74,12 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder>{
         @SuppressLint("SetTextI18n")
         public void setData(List<CartModel> cartProducts, int position) {
             productName.setText(cartProducts.get(position).getProductName());
-            productPrice.setText("Rs."+cartProducts.get(position).getProductPrice());
-            totalQuantity.setText(""+cartProducts.get(position).getQuantity());
+            productPrice.setText("Rs." + cartProducts.get(position).getProductPrice());
+            totalQuantity.setText("" + cartProducts.get(position).getQuantity());
             final DecimalFormat df = new DecimalFormat("0.00");
             double total = cartProducts.get(position).getQuantity() * Double.parseDouble(cartProducts.get(position).getProductPrice());
-            totalPrice.setText("Rs."+df.format(total));
-            if (!cartProducts.get(position).getProductImage().equalsIgnoreCase("default")){
+            totalPrice.setText("Rs." + df.format(total));
+            if (!cartProducts.get(position).getProductImage().equalsIgnoreCase("default")) {
                 Glide.with(context).load(cartProducts.get(position).getProductImage()).into(productImage);
             }
             deleteProductBtn.setOnClickListener(view -> db.collection("users").document(Objects.requireNonNull(auth.getCurrentUser()).getUid())
@@ -93,7 +93,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder>{
                             .collection("cart").document(cartProducts.get(position).getProductId())
                             .set(cartProducts.get(position))
                             .addOnFailureListener(e -> Toast.makeText(context, "Unable to reduce quantity", Toast.LENGTH_SHORT).show());
-                }else{
+                } else {
                     db.collection("users").document(Objects.requireNonNull(auth.getCurrentUser()).getUid())
                             .collection("cart").document(cartProducts.get(position).getProductId())
                             .delete()

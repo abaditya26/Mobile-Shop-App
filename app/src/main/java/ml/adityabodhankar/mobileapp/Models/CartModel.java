@@ -9,12 +9,12 @@ public class CartModel {
     public CartModel() {
     }
 
-    public CartModel(Map<String, Object> data){
+    public CartModel(Map<String, Object> data) {
         this.productId = (String) data.get("productId");
         this.productName = (String) data.get("productName");
         this.productImage = (String) data.get("productImage");
         this.productPrice = (String) data.get("productPrice");
-        this.quantity = (int) ((long)data.get("quantity"));
+        this.quantity = (int) ((long) data.get("quantity"));
     }
 
     public CartModel(String productId, String productName, String productImage, String productPrice, int quantity) {

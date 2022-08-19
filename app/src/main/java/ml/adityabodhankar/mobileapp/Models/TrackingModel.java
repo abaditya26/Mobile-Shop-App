@@ -8,7 +8,7 @@ public class TrackingModel {
     public TrackingModel() {
     }
 
-    public TrackingModel(Map<String, Object> data){
+    public TrackingModel(Map<String, Object> data) {
         this.orderId = (String) data.get("orderId");
         this.status = (String) data.get("status");
         this.description = (String) data.get("description");

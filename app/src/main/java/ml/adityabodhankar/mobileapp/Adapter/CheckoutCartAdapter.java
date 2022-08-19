@@ -46,6 +46,7 @@ public class CheckoutCartAdapter extends RecyclerView.Adapter<CheckoutCartAdapte
     public class ViewHolder extends RecyclerView.ViewHolder {
         private CircleImageView image;
         private TextView name, price;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             image = itemView.findViewById(R.id.product_image);
@@ -58,7 +59,7 @@ public class CheckoutCartAdapter extends RecyclerView.Adapter<CheckoutCartAdapte
             name.setText(cartProduct.getProductName());
             final DecimalFormat df = new DecimalFormat("0.00");
             double total = cartProduct.getQuantity() * Double.parseDouble(cartProduct.getProductPrice());
-            price.setText("Rs."+cartProduct.getProductPrice() + " X " + cartProduct.getQuantity() + " = Rs."+df.format(total));
+            price.setText("Rs." + cartProduct.getProductPrice() + " X " + cartProduct.getQuantity() + " = Rs." + df.format(total));
         }
     }
 }

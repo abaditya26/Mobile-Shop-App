@@ -10,17 +10,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -34,12 +30,12 @@ import ml.adityabodhankar.mobileapp.R;
 
 public class CartFragment extends Fragment {
 
+    double cartTotal = 0.0;
     private List<CartModel> cartProducts;
     private FirebaseFirestore db;
     private FirebaseAuth auth;
     private RecyclerView cartView;
     private TextView total;
-    double cartTotal = 0.0;
     private LinearLayout noProductView;
     private RelativeLayout mainCartView;
 
@@ -61,19 +57,19 @@ public class CartFragment extends Fragment {
 
         db.collection("users").document(Objects.requireNonNull(auth.getCurrentUser()).getUid())
                 .collection("cart").addSnapshotListener((value, error) -> {
-                    if (value != null){
+                    if (value != null) {
                         cartProducts.clear();
                         cartTotal = 0;
                         mainCartView.setVisibility(View.VISIBLE);
                         noProductView.setVisibility(View.GONE);
-                        for (QueryDocumentSnapshot snap : value){
-                            cartTotal += ((long)snap.get("quantity") *
+                        for (QueryDocumentSnapshot snap : value) {
+                            cartTotal += ((long) snap.get("quantity") *
                                     Double.parseDouble((String) Objects.requireNonNull(snap.get("productPrice"))));
                             cartProducts.add(new CartModel(snap.getData()));
                         }
                         //set UI
                         setUI();
-                    }else{
+                    } else {
                         Toast.makeText(requireContext(), "Error to get data from DB", Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -83,12 +79,12 @@ public class CartFragment extends Fragment {
     }
 
     private void setUI() {
-        if (cartProducts.size() == 0){
+        if (cartProducts.size() == 0) {
             mainCartView.setVisibility(View.GONE);
             noProductView.setVisibility(View.VISIBLE);
         }
         final DecimalFormat df = new DecimalFormat("0.00");
-        total.setText("Rs."+df.format(cartTotal));
+        total.setText("Rs." + df.format(cartTotal));
         cartView.setAdapter(new CartAdapter(getContext(), cartProducts));
     }
 }

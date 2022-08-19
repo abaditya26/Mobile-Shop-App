@@ -1,15 +1,6 @@
 package ml.adityabodhankar.mobileapp;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.annotation.SuppressLint;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -21,15 +12,15 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.EventListener;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -37,9 +28,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
-import ml.adityabodhankar.mobileapp.Adapter.CheckoutCartAdapter;
 import ml.adityabodhankar.mobileapp.Adapter.TrackingAdapter;
-import ml.adityabodhankar.mobileapp.Models.CartModel;
 import ml.adityabodhankar.mobileapp.Models.OrderModel;
 import ml.adityabodhankar.mobileapp.Models.TrackingModel;
 
@@ -67,10 +56,11 @@ public class UpdateStatusActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
             toolbar.setNavigationOnClickListener(view -> finish());
-        } catch (Exception ignored) {}
+        } catch (Exception ignored) {
+        }
 
         Intent intent = getIntent();
-        if (intent.getStringExtra("id") == null){
+        if (intent.getStringExtra("id") == null) {
             Toast.makeText(this, "Invalid navigation to screen",
                     Toast.LENGTH_SHORT).show();
             finish();
@@ -102,11 +92,11 @@ public class UpdateStatusActivity extends AppCompatActivity {
 
         db.collection("orders").document(id)
                 .addSnapshotListener((value, error) -> {
-                    if (value != null){
+                    if (value != null) {
                         OrderModel orderData =
                                 new OrderModel(Objects.requireNonNull(value.getData()));
                         setData(orderData);
-                    }else{
+                    } else {
                         Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -116,13 +106,13 @@ public class UpdateStatusActivity extends AppCompatActivity {
                 .addSnapshotListener((snapshots, error) -> {
                     if (snapshots != null) {
                         trackingDetails.clear();
-                        for (QueryDocumentSnapshot snapshot : snapshots){
+                        for (QueryDocumentSnapshot snapshot : snapshots) {
                             trackingDetails.add(new TrackingModel(snapshot.getData()));
                         }
                         //update UI
                         setLoading(false);
                         oldOrdersRecycler.setAdapter(new TrackingAdapter(this, trackingDetails));
-                    }else{
+                    } else {
                         Toast.makeText(this, "Unable to fetch data", Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -136,7 +126,7 @@ public class UpdateStatusActivity extends AppCompatActivity {
                 "Other"
         };
 
-        Spinner spinnerLanguages=findViewById(R.id.status_dropdown);
+        Spinner spinnerLanguages = findViewById(R.id.status_dropdown);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_item, statusArray);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -147,11 +137,12 @@ public class UpdateStatusActivity extends AppCompatActivity {
                 status = statusArray[i];
                 orderStatus.setEnabled(false);
                 orderStatus.setText(status);
-                if (status.equalsIgnoreCase("other")){
+                if (status.equalsIgnoreCase("other")) {
                     orderStatus.setEnabled(true);
                     orderStatus.setText("");
                 }
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
             }
@@ -190,7 +181,7 @@ public class UpdateStatusActivity extends AppCompatActivity {
                 new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
         Date date = new Date();
         String currentDate = formatter.format(date);
-        TrackingModel tracking = new TrackingModel(id,status,description,currentDate);
+        TrackingModel tracking = new TrackingModel(id, status, description, currentDate);
         db.collection("orders").document(id)
                 .collection("tracking").document(tracking.getDateTime()).set(tracking)
                 .addOnSuccessListener(documentReference -> {
@@ -203,11 +194,11 @@ public class UpdateStatusActivity extends AppCompatActivity {
                 });
     }
 
-    private void setLoading(boolean status){
-        if (status){
+    private void setLoading(boolean status) {
+        if (status) {
             progress.setVisibility(View.VISIBLE);
             updateStatusBtn.setVisibility(View.GONE);
-        }else{
+        } else {
             progress.setVisibility(View.GONE);
             updateStatusBtn.setVisibility(View.VISIBLE);
         }
@@ -217,7 +208,7 @@ public class UpdateStatusActivity extends AppCompatActivity {
     private void setData(OrderModel orderData) {
         orderId.setText(orderData.getOrderId());
         orderName.setText(orderData.getOrderTitle());
-        orderTotal.setText(""+orderData.getOrderTotal());
+        orderTotal.setText("" + orderData.getOrderTotal());
         cName.setText(orderData.getName());
     }
 }

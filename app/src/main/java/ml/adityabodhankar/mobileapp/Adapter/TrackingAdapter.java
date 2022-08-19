@@ -16,8 +16,8 @@ import ml.adityabodhankar.mobileapp.R;
 
 public class TrackingAdapter extends RecyclerView.Adapter<TrackingAdapter.ViewHolder> {
 
-    private Context context;
     private final List<TrackingModel> trackingDetails;
+    private Context context;
 
     public TrackingAdapter(Context context, List<TrackingModel> trackingDetails) {
         this.context = context;
@@ -43,6 +43,7 @@ public class TrackingAdapter extends RecyclerView.Adapter<TrackingAdapter.ViewHo
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         final private TextView date, time, title, description;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 

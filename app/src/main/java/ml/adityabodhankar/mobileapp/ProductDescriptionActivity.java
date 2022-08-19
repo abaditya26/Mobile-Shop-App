@@ -45,7 +45,7 @@ public class ProductDescriptionActivity extends AppCompatActivity {
 
         addToCartBtn = findViewById(R.id.add_to_cart_btn);
         loading = findViewById(R.id.progress_add_to_cart);
-        buyBtn  =findViewById(R.id.buy_now_btn);
+        buyBtn = findViewById(R.id.buy_now_btn);
 //        Getting the data
         Intent intent = getIntent();
         String id = intent.getStringExtra("id");
@@ -77,7 +77,7 @@ public class ProductDescriptionActivity extends AppCompatActivity {
             Glide.with(this).load(product.getImage()).into(image);
         }
 
-        addToCartBtn.setOnClickListener(view -> addToCart(product , false));
+        addToCartBtn.setOnClickListener(view -> addToCart(product, false));
         buyBtn.setOnClickListener(view -> addToCart(product, true));
         showLoading(false);
     }
@@ -103,7 +103,7 @@ public class ProductDescriptionActivity extends AppCompatActivity {
                     }
                     db.collection("users").document(uid).collection("cart").document(product.getId())
                             .set(cartProduct).addOnSuccessListener(unused -> {
-                                if (isBuy){
+                                if (isBuy) {
                                     startActivity(new Intent(this, CheckoutActivity.class));
                                     finish();
                                     return;

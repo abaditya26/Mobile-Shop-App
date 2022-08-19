@@ -1,16 +1,16 @@
 package ml.adityabodhankar.mobileapp;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
@@ -51,10 +51,11 @@ public class OrderDetailsActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
             toolbar.setNavigationOnClickListener(view -> finish());
-        } catch (Exception ignored) {}
+        } catch (Exception ignored) {
+        }
 
         Intent intent = getIntent();
-        if (intent.getStringExtra("id") == null){
+        if (intent.getStringExtra("id") == null) {
             Toast.makeText(this, "Invalid navigation to screen", Toast.LENGTH_SHORT).show();
             finish();
             return;
@@ -88,26 +89,26 @@ public class OrderDetailsActivity extends AppCompatActivity {
 
         db.collection("orders").document(intent.getStringExtra("id"))
                 .addSnapshotListener((value, error) -> {
-                    if (value != null){
+                    if (value != null) {
                         OrderModel orderData = new OrderModel(Objects.requireNonNull(value.getData()));
                         List<CartModel> orderProducts = new ArrayList<>();
                         db.collection("orders").document(intent.getStringExtra("id"))
                                 .collection("products")
                                 .addSnapshotListener((value1, error1) -> {
-                                    if (value1 != null){
+                                    if (value1 != null) {
                                         orderProducts.clear();
                                         totalQuantity = 0;
-                                        for (QueryDocumentSnapshot s : value1){
+                                        for (QueryDocumentSnapshot s : value1) {
                                             orderProducts.add(new CartModel(s.getData()));
                                             totalQuantity += (int) ((long) (s.get("quantity")));
                                         }
                                         setData(orderData, orderProducts);
-                                    }else{
+                                    } else {
                                         Toast.makeText(this, "Error",
                                                 Toast.LENGTH_SHORT).show();
                                     }
                                 });
-                    }else{
+                    } else {
                         Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -118,14 +119,14 @@ public class OrderDetailsActivity extends AppCompatActivity {
                 .addSnapshotListener((snapshots, error) -> {
                     if (snapshots != null) {
                         trackingDetails.clear();
-                        for (QueryDocumentSnapshot snapshot : snapshots){
+                        for (QueryDocumentSnapshot snapshot : snapshots) {
                             trackingDetails.add(new TrackingModel(snapshot.getData()));
                         }
 
                         //update UI
                         setLoading(false);
                         oldOrdersRecycler.setAdapter(new TrackingAdapter(this, trackingDetails));
-                    }else{
+                    } else {
                         Toast.makeText(this, "Unable to fetch data", Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -133,23 +134,25 @@ public class OrderDetailsActivity extends AppCompatActivity {
     }
 
     private void setLoading(boolean status) {
-        if (status){}else{}
+        if (status) {
+        } else {
+        }
     }
 
     @SuppressLint("SetTextI18n")
     private void setData(OrderModel orderData, List<CartModel> orderProducts) {
         orderId.setText(orderData.getOrderId());
         orderName.setText(orderData.getOrderTitle());
-        orderTotal.setText(""+orderData.getOrderTotal());
+        orderTotal.setText("" + orderData.getOrderTotal());
         cName.setText(orderData.getName());
         cPhoneNo.setText(orderData.getPhone());
-        cAddress.setText(orderData.getAddressHouseNo() + ", "+
-                orderData.getAddressLandmark() + ", "+ orderData.getAddressStreet());
+        cAddress.setText(orderData.getAddressHouseNo() + ", " +
+                orderData.getAddressLandmark() + ", " + orderData.getAddressStreet());
         cCity.setText(orderData.getAddressCity());
         cPinCode.setText(orderData.getAddressPinCode());
         adminOrdersProductsRecycler.setAdapter(new CheckoutCartAdapter(this, orderProducts));
-        totalQuantityView.setText(""+totalQuantity);
-        totalProductsView.setText(orderProducts.size()+"");
+        totalQuantityView.setText("" + totalQuantity);
+        totalProductsView.setText(orderProducts.size() + "");
         orderStatus.setText(orderData.getOrderStatus());
         paymentId.setText(orderData.getPaymentId());
     }

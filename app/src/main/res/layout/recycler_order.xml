@@ -19,17 +19,17 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:gravity="center"
-        android:layout_toEndOf="@+id/order_image"
         android:layout_margin="10dp"
+        android:layout_toEndOf="@+id/order_image"
+        android:gravity="center"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/order_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:text="Order Name" />
+            android:text="Order Name"
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/order_status"

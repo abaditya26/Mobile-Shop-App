@@ -49,6 +49,7 @@ public class UserOrderAdapter extends RecyclerView.Adapter<UserOrderAdapter.View
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView orderName, orderStatus;
         CircleImageView image;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             orderName = itemView.findViewById(R.id.order_name);
@@ -59,7 +60,7 @@ public class UserOrderAdapter extends RecyclerView.Adapter<UserOrderAdapter.View
         public void setData(OrderModel orderData) {
             orderName.setText(orderData.getOrderTitle());
             orderStatus.setText(orderData.getOrderStatus());
-            if (!orderData.getOrderImage().equalsIgnoreCase("default")){
+            if (!orderData.getOrderImage().equalsIgnoreCase("default")) {
                 Glide.with(context).load(orderData.getOrderImage()).into(image);
             }
             itemView.setOnClickListener(view -> {
