@@ -23,7 +23,7 @@ import ml.adityabodhankar.mobileapp.Models.ProductModel;
 public class ProductDescriptionActivity extends AppCompatActivity {
 
     private FirebaseFirestore db;
-    private TextView addToCartBtn;
+    private TextView addToCartBtn, buyBtn;
     private ProgressBar loading;
 
     @Override
@@ -45,6 +45,7 @@ public class ProductDescriptionActivity extends AppCompatActivity {
 
         addToCartBtn = findViewById(R.id.add_to_cart_btn);
         loading = findViewById(R.id.progress_add_to_cart);
+        buyBtn  =findViewById(R.id.buy_now_btn);
 //        Getting the data
         Intent intent = getIntent();
         String id = intent.getStringExtra("id");
@@ -76,14 +77,12 @@ public class ProductDescriptionActivity extends AppCompatActivity {
             Glide.with(this).load(product.getImage()).into(image);
         }
 
-        addToCartBtn.setOnClickListener(view -> {
-            // add to cart
-            addToCart(product);
-        });
+        addToCartBtn.setOnClickListener(view -> addToCart(product , false));
+        buyBtn.setOnClickListener(view -> addToCart(product, true));
         showLoading(false);
     }
 
-    private void addToCart(ProductModel product) {
+    private void addToCart(ProductModel product, boolean isBuy) {
 //        check if the product is already in cart
 //        if yes then increment the quantity
 //        if no add as new product to cart
@@ -104,6 +103,11 @@ public class ProductDescriptionActivity extends AppCompatActivity {
                     }
                     db.collection("users").document(uid).collection("cart").document(product.getId())
                             .set(cartProduct).addOnSuccessListener(unused -> {
+                                if (isBuy){
+                                    startActivity(new Intent(this, CheckoutActivity.class));
+                                    finish();
+                                    return;
+                                }
                                 Toast.makeText(this, "Product Added to cart", Toast.LENGTH_SHORT).show();
                                 showLoading(false);
                             }).addOnFailureListener(e -> {
@@ -120,10 +124,12 @@ public class ProductDescriptionActivity extends AppCompatActivity {
         if (flag) {
             //show loading
             addToCartBtn.setVisibility(View.GONE);
+            buyBtn.setVisibility(View.GONE);
             loading.setVisibility(View.VISIBLE);
         } else {
             //hide loading
             addToCartBtn.setVisibility(View.VISIBLE);
+            buyBtn.setVisibility(View.VISIBLE);
             loading.setVisibility(View.GONE);
         }
     }
