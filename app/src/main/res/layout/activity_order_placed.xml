@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".OrderPlacedActivity"
-    android:background="@color/blue_app">
+    android:background="@color/blue_app"
+    tools:context=".OrderPlacedActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -26,46 +26,42 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
             android:text="Your Order has been placed for"
             android:textColor="@color/white"
-            android:textSize="22sp"
-            android:gravity="center"
-            android:layout_marginTop="10dp"
-            />
+            android:textSize="22sp" />
 
         <TextView
             android:id="@+id/customer_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:gravity="center"
             android:text="Customer name"
             android:textColor="@color/white"
             android:textSize="26sp"
-            android:textStyle="bold"
-            android:gravity="center"
-            android:layout_marginBottom="10dp"
-            />
+            android:textStyle="bold" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Order Total"
-            android:textColor="@color/white"
-            android:textSize="20sp"
             android:layout_marginTop="20dp"
             android:gravity="center"
-            />
+            android:text="Order Total"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/order_total"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:gravity="center"
             android:text="Rs.102.21"
             android:textColor="@color/white"
             android:textSize="26sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="20dp"
-            android:gravity="center"
-            />
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/ok_btn"
@@ -73,8 +69,7 @@
             android:layout_height="wrap_content"
             android:backgroundTint="@color/white"
             android:text="OK"
-            android:textColor="@color/black"
-            />
+            android:textColor="@color/black" />
 
     </LinearLayout>
 

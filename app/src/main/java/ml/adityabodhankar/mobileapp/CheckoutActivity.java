@@ -268,7 +268,7 @@ public class CheckoutActivity extends AppCompatActivity implements PaymentResult
 
         Intent i = new Intent(this, OrderPlacedActivity.class);
         i.putExtra("id", order.getOrderId());
-        i.putExtra("total", order.getOrderTotal()+"");
+        i.putExtra("total", order.getOrderTotal() + "");
         i.putExtra("c_name", order.getName());
         startActivity(i);
         finish();

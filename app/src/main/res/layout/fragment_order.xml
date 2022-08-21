@@ -14,8 +14,8 @@
         android:id="@+id/no_order_text"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="No Orders Found"
         android:gravity="center"
-        android:textSize="24sp"/>
+        android:text="No Orders Found"
+        android:textSize="24sp" />
 
 </RelativeLayout>

@@ -39,7 +39,7 @@ public class CategoriesFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_categories, container, false);
         db = FirebaseFirestore.getInstance();
         categoriesRecycler = view.findViewById(R.id.admin_categories_recycler);
-        noCategories =view.findViewById(R.id.no_categories_text);
+        noCategories = view.findViewById(R.id.no_categories_text);
 
         categoriesRecycler.setVisibility(View.VISIBLE);
         noCategories.setVisibility(View.GONE);
@@ -52,10 +52,10 @@ public class CategoriesFragment extends Fragment {
                     categories.add(
                             new CategoryModel(Objects.requireNonNull(snapshot.getData())));
                 }
-                if (categories.size() == 0){
+                if (categories.size() == 0) {
                     categoriesRecycler.setVisibility(View.GONE);
                     noCategories.setVisibility(View.VISIBLE);
-                }else{
+                } else {
                     categoriesRecycler.setVisibility(View.VISIBLE);
                     noCategories.setVisibility(View.GONE);
                     categoriesRecycler.setAdapter(new AdminCategoryAdapter(getContext(), categories));

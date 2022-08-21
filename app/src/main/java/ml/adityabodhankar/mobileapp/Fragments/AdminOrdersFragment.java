@@ -53,10 +53,10 @@ public class AdminOrdersFragment extends Fragment {
                             } catch (Exception ignored) {
                             }
                         }
-                        if (orders.size() == 0){
+                        if (orders.size() == 0) {
                             noOrders.setVisibility(View.VISIBLE);
                             ordersRecyclerView.setVisibility(View.GONE);
-                        }else {
+                        } else {
                             noOrders.setVisibility(View.GONE);
                             ordersRecyclerView.setVisibility(View.VISIBLE);
                             //setUI

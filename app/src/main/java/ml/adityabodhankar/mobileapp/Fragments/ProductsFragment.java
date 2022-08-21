@@ -51,10 +51,10 @@ public class ProductsFragment extends Fragment {
                     products.add(
                             new ProductModel(Objects.requireNonNull(snapshot.getData())));
                 }
-                if (products.size() == 0){
+                if (products.size() == 0) {
                     noProducts.setVisibility(View.VISIBLE);
                     productsRecycler.setVisibility(View.GONE);
-                }else{
+                } else {
                     noProducts.setVisibility(View.GONE);
                     productsRecycler.setVisibility(View.VISIBLE);
                     productsRecycler.setAdapter(new AdminProductAdapter(requireContext(), products));

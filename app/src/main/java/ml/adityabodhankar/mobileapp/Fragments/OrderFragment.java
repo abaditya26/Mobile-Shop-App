@@ -51,10 +51,10 @@ public class OrderFragment extends Fragment {
                         for (QueryDocumentSnapshot snapshot : value) {
                             orders.add(new OrderModel(snapshot.getData()));
                         }
-                        if (orders.size() == 0){
+                        if (orders.size() == 0) {
                             noOrders.setVisibility(View.VISIBLE);
                             orderRecyclerView.setVisibility(View.GONE);
-                        }else {
+                        } else {
                             noOrders.setVisibility(View.GONE);
                             orderRecyclerView.setVisibility(View.VISIBLE);
                             //setUI

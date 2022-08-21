@@ -10,16 +10,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -84,10 +80,10 @@ public class HomeFragment extends Fragment {
                         for (DocumentSnapshot snapshot : value) {
                             products.add(new ProductModel(Objects.requireNonNull(snapshot.getData())));
                         }
-                        if (products.size() == 0){
+                        if (products.size() == 0) {
                             noProducts.setVisibility(View.VISIBLE);
                             productsView.setVisibility(View.GONE);
-                        }else {
+                        } else {
                             noProducts.setVisibility(View.GONE);
                             productsView.setVisibility(View.VISIBLE);
                             CommonData.products = products;
@@ -96,7 +92,7 @@ public class HomeFragment extends Fragment {
                         }
                         productsLoaded = true;
                         setLoading();
-                    }else{
+                    } else {
                         Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
                     }
                 });

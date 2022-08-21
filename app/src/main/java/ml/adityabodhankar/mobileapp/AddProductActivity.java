@@ -1,8 +1,10 @@
 package ml.adityabodhankar.mobileapp;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -26,6 +28,8 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -239,7 +243,16 @@ public class AddProductActivity extends AppCompatActivity {
         } else {
             //add image first
             StorageReference storageRef = FirebaseStorage.getInstance().getReference().child("products/" + productName + ".png");
-            storageRef.putFile(imageUri).addOnSuccessListener(taskSnapshot -> {
+            Bitmap bmp = null;
+            try {
+                bmp = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            Objects.requireNonNull(bmp).compress(Bitmap.CompressFormat.JPEG, 10, baos);
+            byte[] data = baos.toByteArray();
+            storageRef.putBytes(data).addOnSuccessListener(taskSnapshot -> {
                 Task<Uri> task = Objects.requireNonNull(Objects.requireNonNull(taskSnapshot.getMetadata()).getReference()).getDownloadUrl();
                 task.addOnSuccessListener(uri -> {
                     String imageUrl = uri.toString();

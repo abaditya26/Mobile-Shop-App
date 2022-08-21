@@ -12,12 +12,15 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
@@ -25,6 +28,8 @@ import com.google.firebase.storage.StorageReference;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -89,6 +94,7 @@ public class AddCategoryActivity extends AppCompatActivity {
                                     Glide.with(this).load(categoryData.getImage()).into(categoryImage);
                                 }
                                 categoryNameInp.setText(categoryData.getTitle());
+                                addCategoryBtn.setText("Update Category");
                             } else {
                                 Toast.makeText(this, "Unable to load data", Toast.LENGTH_SHORT).show();
                                 finish();
@@ -186,7 +192,19 @@ public class AddCategoryActivity extends AppCompatActivity {
     }
 
     private void updateData(boolean isImageUpdated, String imageUrl) {
-        Toast.makeText(this, "TODO:update data", Toast.LENGTH_SHORT).show();
+        Map<String, Object> updateData = new HashMap<>();
+        if (isImageUpdated) {
+            updateData.put("image", imageUrl);
+        }
+        updateData.put("title", categoryNameInp.getText().toString());
+        db.collection("categories").document(categoryData.getId()).update(updateData)
+                .addOnSuccessListener(unused -> {
+                    Toast.makeText(this, "Category Updated", Toast.LENGTH_SHORT).show();
+                    showLoading(false);
+                }).addOnFailureListener(e -> {
+                    Toast.makeText(this, "Fail to update Category", Toast.LENGTH_SHORT).show();
+                    showLoading(false);
+                });
     }
 
     private void addCategoryData(String imageUrl) {

@@ -14,10 +14,9 @@
         android:id="@+id/no_products_found"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="No Products"
-        android:textSize="24sp"
         android:gravity="center"
-        />
+        android:text="No Products"
+        android:textSize="24sp" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_add_product"
