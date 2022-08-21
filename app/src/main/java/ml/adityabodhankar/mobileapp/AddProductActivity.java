@@ -31,7 +31,9 @@ import com.google.firebase.storage.StorageReference;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -156,6 +158,8 @@ public class AddProductActivity extends AppCompatActivity {
                                         dropdown.setSelection(i);
                                     }
                                 }
+                                Objects.requireNonNull(getSupportActionBar()).setTitle("Update Product");
+                                addProductBtn.setText("Update Product");
                             } else {
                                 Toast.makeText(this, "Unable to load data", Toast.LENGTH_SHORT).show();
                                 finish();
@@ -166,7 +170,6 @@ public class AddProductActivity extends AppCompatActivity {
                         });
             }
         } catch (Exception ignored) {
-
         }
     }
 
@@ -293,7 +296,23 @@ public class AddProductActivity extends AppCompatActivity {
     }
 
     private void updateData(boolean isImageUpdated, String imageUrl) {
-        Toast.makeText(this, "TODO:update data", Toast.LENGTH_SHORT).show();
+        Map<String, Object> updateData = new HashMap<>();
+        if (isImageUpdated) {
+            updateData.put("image", imageUrl);
+        }
+        updateData.put("name", productName.getText().toString());
+        updateData.put("price", productPrice.getText().toString());
+        updateData.put("description", productDescription.getText().toString());
+        updateData.put("category", category);
+        updateData.put("pickup", isPickup);
+        db.collection("products").document(productData.getId()).update(updateData)
+                .addOnSuccessListener(unused -> {
+                    Toast.makeText(this, "Product Updated", Toast.LENGTH_SHORT).show();
+                    showLoading(false);
+                }).addOnFailureListener(e -> {
+                    Toast.makeText(this, "Fail to update Product", Toast.LENGTH_SHORT).show();
+                    showLoading(false);
+                });
     }
 
 

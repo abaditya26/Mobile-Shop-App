@@ -1,6 +1,7 @@
 package ml.adityabodhankar.mobileapp.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import ml.adityabodhankar.mobileapp.AddProductActivity;
 import ml.adityabodhankar.mobileapp.Models.ProductModel;
 import ml.adityabodhankar.mobileapp.R;
 
@@ -68,9 +70,9 @@ public class AdminProductAdapter extends RecyclerView.Adapter<AdminProductAdapte
                     .addOnSuccessListener(unused -> Toast.makeText(context, "Product Deleted.", Toast.LENGTH_SHORT).show())
                     .addOnFailureListener(e -> Toast.makeText(context, "Product delete fail.", Toast.LENGTH_SHORT).show()));
             itemView.setOnClickListener(view -> {
-//                Intent intent = new Intent(context, AddProductActivity.class);
-//                intent.putExtra("categoryId", products.get(position).getId());
-//                context.startActivity(intent);
+                Intent intent = new Intent(context, AddProductActivity.class);
+                intent.putExtra("productId", products.get(position).getId());
+                context.startActivity(intent);
             });
         }
     }

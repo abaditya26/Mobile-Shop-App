@@ -95,6 +95,7 @@ public class AddCategoryActivity extends AppCompatActivity {
                                 }
                                 categoryNameInp.setText(categoryData.getTitle());
                                 addCategoryBtn.setText("Update Category");
+                                Objects.requireNonNull(getSupportActionBar()).setTitle("Update Category");
                             } else {
                                 Toast.makeText(this, "Unable to load data", Toast.LENGTH_SHORT).show();
                                 finish();
