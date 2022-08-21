@@ -64,9 +64,11 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
             }
             itemView.setOnClickListener(view -> {
                 ArrayList<ProductModel> products = new ArrayList<>();
-                for (ProductModel p : CommonData.products) {
-                    if (p.getCategory().equalsIgnoreCase(categories.get(position).getId())) {
-                        products.add(p);
+                if (CommonData.products.size() != 0) {
+                    for (ProductModel p : CommonData.products) {
+                        if (p.getCategory().equalsIgnoreCase(categories.get(position).getId())) {
+                            products.add(p);
+                        }
                     }
                 }
                 if (categories.get(position).getId().equalsIgnoreCase("0")) {

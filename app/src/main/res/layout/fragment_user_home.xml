@@ -82,6 +82,15 @@
                 android:numColumns="2"
                 android:verticalSpacing="6dp" />
 
+            <TextView
+                android:id="@+id/no_products_found"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="No Products Found"
+                android:textSize="24sp"
+                android:gravity="center"
+                android:layout_margin="20dp"
+                />
         </LinearLayout>
     </LinearLayout>
 

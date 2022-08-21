@@ -104,6 +104,7 @@ public class UserModel {
         data.put("phone", phone);
         data.put("gender", gender);
         data.put("profile", profile);
+        data.put("admin", admin);
         return data;
     }
 }

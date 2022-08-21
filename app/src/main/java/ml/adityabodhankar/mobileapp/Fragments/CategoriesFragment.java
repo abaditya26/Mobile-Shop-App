@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -28,6 +29,7 @@ public class CategoriesFragment extends Fragment {
 
     private FirebaseFirestore db;
     private RecyclerView categoriesRecycler;
+    private TextView noCategories;
     private List<CategoryModel> categories;
 
     @Override
@@ -37,6 +39,11 @@ public class CategoriesFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_categories, container, false);
         db = FirebaseFirestore.getInstance();
         categoriesRecycler = view.findViewById(R.id.admin_categories_recycler);
+        noCategories =view.findViewById(R.id.no_categories_text);
+
+        categoriesRecycler.setVisibility(View.VISIBLE);
+        noCategories.setVisibility(View.GONE);
+
         categoriesRecycler.setLayoutManager(new LinearLayoutManager(requireContext()));
         db.collection("categories").addSnapshotListener((snapshots, error) -> {
             if (snapshots != null) {
@@ -45,7 +52,14 @@ public class CategoriesFragment extends Fragment {
                     categories.add(
                             new CategoryModel(Objects.requireNonNull(snapshot.getData())));
                 }
-                categoriesRecycler.setAdapter(new AdminCategoryAdapter(getContext(), categories));
+                if (categories.size() == 0){
+                    categoriesRecycler.setVisibility(View.GONE);
+                    noCategories.setVisibility(View.VISIBLE);
+                }else{
+                    categoriesRecycler.setVisibility(View.VISIBLE);
+                    noCategories.setVisibility(View.GONE);
+                    categoriesRecycler.setAdapter(new AdminCategoryAdapter(getContext(), categories));
+                }
             } else {
                 Toast.makeText(requireContext(), "Error:- " + Objects.requireNonNull(error).getMessage(), Toast.LENGTH_SHORT).show();
             }

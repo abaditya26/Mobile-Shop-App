@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -27,6 +28,7 @@ public class ProductsFragment extends Fragment {
 
     private FirebaseFirestore db;
     private RecyclerView productsRecycler;
+    private TextView noProducts;
     private ArrayList<ProductModel> products;
 
     @Override
@@ -36,6 +38,11 @@ public class ProductsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_products, container, false);
         db = FirebaseFirestore.getInstance();
         productsRecycler = view.findViewById(R.id.admin_product_recycler);
+        noProducts = view.findViewById(R.id.no_products_found);
+
+        noProducts.setVisibility(View.GONE);
+        productsRecycler.setVisibility(View.VISIBLE);
+
         productsRecycler.setLayoutManager(new LinearLayoutManager(requireContext()));
         db.collection("products").addSnapshotListener((snapshots, error) -> {
             if (snapshots != null) {
@@ -44,7 +51,14 @@ public class ProductsFragment extends Fragment {
                     products.add(
                             new ProductModel(Objects.requireNonNull(snapshot.getData())));
                 }
-                productsRecycler.setAdapter(new AdminProductAdapter(requireContext(), products));
+                if (products.size() == 0){
+                    noProducts.setVisibility(View.VISIBLE);
+                    productsRecycler.setVisibility(View.GONE);
+                }else{
+                    noProducts.setVisibility(View.GONE);
+                    productsRecycler.setVisibility(View.VISIBLE);
+                    productsRecycler.setAdapter(new AdminProductAdapter(requireContext(), products));
+                }
             } else {
                 Toast.makeText(requireContext(), "Error:- " + Objects.requireNonNull(error).getMessage(), Toast.LENGTH_SHORT).show();
             }

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -26,6 +27,7 @@ public class OrderFragment extends Fragment {
 
     private List<OrderModel> orders;
     private RecyclerView orderRecyclerView;
+    private TextView noOrders;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -36,6 +38,10 @@ public class OrderFragment extends Fragment {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         orders = new ArrayList<>();
         orderRecyclerView = view.findViewById(R.id.orders_recycler);
+        noOrders = view.findViewById(R.id.no_order_text);
+
+        noOrders.setVisibility(View.GONE);
+        orderRecyclerView.setVisibility(View.VISIBLE);
         orderRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
         db.collection("orders").whereEqualTo("uid",
                         Objects.requireNonNull(auth.getCurrentUser()).getUid())
@@ -45,8 +51,15 @@ public class OrderFragment extends Fragment {
                         for (QueryDocumentSnapshot snapshot : value) {
                             orders.add(new OrderModel(snapshot.getData()));
                         }
-                        //setUI
-                        orderRecyclerView.setAdapter(new UserOrderAdapter(getContext(), orders));
+                        if (orders.size() == 0){
+                            noOrders.setVisibility(View.VISIBLE);
+                            orderRecyclerView.setVisibility(View.GONE);
+                        }else {
+                            noOrders.setVisibility(View.GONE);
+                            orderRecyclerView.setVisibility(View.VISIBLE);
+                            //setUI
+                            orderRecyclerView.setAdapter(new UserOrderAdapter(getContext(), orders));
+                        }
                     } else {
                         Toast.makeText(requireContext(), "Unable to get the data from cloud", Toast.LENGTH_SHORT).show();
                     }

@@ -11,7 +11,7 @@ import ml.adityabodhankar.mobileapp.Models.ProductModel;
 
 public class CommonData {
 
-    public static ArrayList<ProductModel> products;
+    public static ArrayList<ProductModel> products = new ArrayList<>();
 
     public static void signOut(Context context) {
         FirebaseAuth auth = FirebaseAuth.getInstance();

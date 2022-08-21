@@ -7,14 +7,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +36,7 @@ public class HomeFragment extends Fragment {
 
     @SuppressLint("StaticFieldLeak")
     public static GridView productsView;
+    private TextView noProducts;
     private List<CategoryModel> categories;
     private ArrayList<ProductModel> products;
     private RecyclerView categoriesRecycler;
@@ -48,6 +54,7 @@ public class HomeFragment extends Fragment {
                 new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL,
                         false));
         productsView = view.findViewById(R.id.products_grid);
+        noProducts = view.findViewById(R.id.no_products_found);
         progressLayout = view.findViewById(R.id.progress_products);
         mainLayout = view.findViewById(R.id.main_screen);
         progressLayout.setVisibility(View.VISIBLE);
@@ -68,22 +75,34 @@ public class HomeFragment extends Fragment {
                 }).addOnFailureListener(e -> {
                     Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
                 });
-        db.collection("products").get()
-                .addOnSuccessListener(queryDocumentSnapshots -> {
-                    productsLoaded = false;
-                    setLoading();
-                    products = new ArrayList<>();
-                    for (DocumentSnapshot snapshot : queryDocumentSnapshots) {
-                        products.add(new ProductModel(Objects.requireNonNull(snapshot.getData())));
+        db.collection("products")
+                .addSnapshotListener((value, error) -> {
+                    if (value != null) {
+                        productsLoaded = false;
+                        setLoading();
+                        products = new ArrayList<>();
+                        for (DocumentSnapshot snapshot : value) {
+                            products.add(new ProductModel(Objects.requireNonNull(snapshot.getData())));
+                        }
+                        if (products.size() == 0){
+                            noProducts.setVisibility(View.VISIBLE);
+                            productsView.setVisibility(View.GONE);
+                        }else {
+                            noProducts.setVisibility(View.GONE);
+                            productsView.setVisibility(View.VISIBLE);
+                            CommonData.products = products;
+                            productsView.setAdapter(
+                                    new ProductAdapter(requireContext(), 0, products));
+                        }
+                        productsLoaded = true;
+                        setLoading();
+                    }else{
+                        Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
                     }
-                    CommonData.products = products;
-                    productsView.setAdapter(
-                            new ProductAdapter(requireContext(), 0, products));
-                    productsLoaded = true;
-                    setLoading();
-                }).addOnFailureListener(e -> {
-                    Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
                 });
+
+        noProducts.setVisibility(View.GONE);
+        productsView.setVisibility(View.VISIBLE);
         return view;
     }
 
