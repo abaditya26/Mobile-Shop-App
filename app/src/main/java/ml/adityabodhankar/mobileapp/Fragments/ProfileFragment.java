@@ -133,6 +133,9 @@ public class ProfileFragment extends Fragment {
                         Toast.makeText(getContext(), "Unable to sync data", Toast.LENGTH_SHORT).show();
                     }
                 });
+        (view.findViewById(R.id.edit_profile_layout)).setOnClickListener(v -> {
+//            getActivity().startActivityForResult();
+        });
         return view;
     }
 
@@ -165,4 +168,6 @@ public class ProfileFragment extends Fragment {
         phoneInput.setEnabled(false);
         updateProfileBtn.setText("Edit Profile");
     }
+
+
 }
