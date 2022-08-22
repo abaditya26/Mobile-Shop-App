@@ -12,12 +12,15 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -25,7 +28,9 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import ml.adityabodhankar.mobileapp.Adapter.TrackingAdapter;
@@ -119,9 +124,11 @@ public class UpdateStatusActivity extends AppCompatActivity {
 
         String[] statusArray = {
                 "Order Placed",
+                "Order Dispatched",
                 "Tracking Update",
                 "Pickup",
                 "Cancelled",
+                "Repair",
                 "Order Complete",
                 "Other"
         };
@@ -182,13 +189,21 @@ public class UpdateStatusActivity extends AppCompatActivity {
         Date date = new Date();
         String currentDate = formatter.format(date);
         TrackingModel tracking = new TrackingModel(id, status, description, currentDate);
-        db.collection("orders").document(id)
-                .collection("tracking").document(tracking.getDateTime()).set(tracking)
-                .addOnSuccessListener(documentReference -> {
-                    orderDescription.setText("");
-                    Toast.makeText(this, "Tracking Added", Toast.LENGTH_SHORT).show();
-                    setLoading(false);
-                }).addOnFailureListener(e -> {
+        Map<String, Object> updateData = new HashMap<>();
+        updateData.put("orderStatus", status);
+        db.collection("orders").document(id).update(updateData)
+                        .addOnSuccessListener(unused -> {
+                            db.collection("orders").document(id)
+                                    .collection("tracking").document(tracking.getDateTime()).set(tracking)
+                                    .addOnSuccessListener(documentReference -> {
+                                        orderDescription.setText("");
+                                        Toast.makeText(this, "Tracking Added", Toast.LENGTH_SHORT).show();
+                                        setLoading(false);
+                                    }).addOnFailureListener(e -> {
+                                        Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
+                                        setLoading(false);
+                                    });
+                        }).addOnFailureListener(e -> {
                     Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
                     setLoading(false);
                 });

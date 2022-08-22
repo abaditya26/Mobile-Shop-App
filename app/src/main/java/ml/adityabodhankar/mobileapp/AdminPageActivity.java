@@ -1,10 +1,17 @@
 package ml.adityabodhankar.mobileapp;
 
+import android.app.ProgressDialog;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.navigation.NavController;
@@ -12,13 +19,26 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 import ml.adityabodhankar.mobileapp.databinding.ActivityAdminPageBinding;
 
 public class AdminPageActivity extends AppCompatActivity {
 
     private ActivityAdminPageBinding binding;
+    private FirebaseAuth auth;
+    private FirebaseFirestore db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +60,9 @@ public class AdminPageActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(
                 this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
+
+        db = FirebaseFirestore.getInstance();
+        auth = FirebaseAuth.getInstance();
     }
 
 
@@ -57,6 +80,56 @@ public class AdminPageActivity extends AppCompatActivity {
             return true;
         } else {
             return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1 && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            Uri imageUri = data.getData();
+            StorageReference storageRef = FirebaseStorage.getInstance().getReference()
+                    .child("users/" + Objects.requireNonNull(auth.getCurrentUser()).getUid() + ".png");
+            Bitmap bmp = null;
+            try {
+                bmp = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            Objects.requireNonNull(bmp).compress(Bitmap.CompressFormat.JPEG, 20, baos);
+            byte[] data1 = baos.toByteArray();
+            ProgressDialog pd = new ProgressDialog(this);
+            pd.setTitle("Loading");
+            pd.setMessage("Uploading Image Please Wait");
+            pd.setCancelable(false);
+            pd.show();
+            storageRef.putBytes(data1).addOnSuccessListener(taskSnapshot -> {
+                Task<Uri> task = Objects.requireNonNull(
+                        Objects.requireNonNull(taskSnapshot.getMetadata()).getReference()).getDownloadUrl();
+                task.addOnSuccessListener(uri -> {
+                    String imageUrl = uri.toString();
+                    Map<String, Object> updateData = new HashMap<>();
+                    updateData.put("profile", imageUrl);
+                    db.collection("users").document(auth.getCurrentUser().getUid())
+                            .update(updateData)
+                            .addOnSuccessListener(unused -> {
+                                pd.dismiss();
+                                Toast.makeText(this, "Profile Image Updated",
+                                        Toast.LENGTH_SHORT).show();
+                            }).addOnFailureListener(e -> {
+                                Toast.makeText(this, "Failed to update image",
+                                        Toast.LENGTH_SHORT).show();
+                                pd.dismiss();
+                            });
+                }).addOnFailureListener(e -> {
+                    pd.dismiss();
+                    Toast.makeText(this, "Error => " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                });
+            }).addOnFailureListener(e -> {
+                pd.dismiss();
+                Toast.makeText(this, "Error => " + e.getMessage(), Toast.LENGTH_SHORT).show();
+            });
         }
     }
 }

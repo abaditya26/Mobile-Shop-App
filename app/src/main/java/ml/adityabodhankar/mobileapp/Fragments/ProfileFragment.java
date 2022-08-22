@@ -1,5 +1,6 @@
 package ml.adityabodhankar.mobileapp.Fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -130,11 +131,13 @@ public class ProfileFragment extends Fragment {
                         progress.setVisibility(View.GONE);
                         updateProfileBtn.setVisibility(View.VISIBLE);
                     } catch (Exception ignored) {
-                        Toast.makeText(getContext(), "Unable to sync data", Toast.LENGTH_SHORT).show();
                     }
                 });
         (view.findViewById(R.id.edit_profile_layout)).setOnClickListener(v -> {
-//            getActivity().startActivityForResult();
+            Intent intent = new Intent();
+            intent.setType("image/*");
+            intent.setAction(Intent.ACTION_GET_CONTENT);
+            requireActivity().startActivityForResult(intent, 1);
         });
         return view;
     }
