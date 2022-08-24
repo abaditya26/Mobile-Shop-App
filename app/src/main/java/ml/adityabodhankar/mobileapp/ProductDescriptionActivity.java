@@ -70,7 +70,11 @@ public class ProductDescriptionActivity extends AppCompatActivity {
         TextView title = findViewById(R.id.product_name);
         TextView description = findViewById(R.id.product_description);
         ImageView image = findViewById(R.id.product_image);
-        price.setText(product.getPrice());
+        if (product.getPrice().equalsIgnoreCase("0")){
+            price.setText("Dynamic Pricing Applicable");
+        }else {
+            price.setText(product.getPrice());
+        }
         title.setText(product.getName());
         description.setText(product.getDescription());
         if (!product.getImage().equalsIgnoreCase("default")) {

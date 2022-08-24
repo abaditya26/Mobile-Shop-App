@@ -17,6 +17,7 @@ import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 
 import ml.adityabodhankar.mobileapp.Models.ProductModel;
+import ml.adityabodhankar.mobileapp.PickupProductDescriptionActivity;
 import ml.adityabodhankar.mobileapp.ProductDescriptionActivity;
 import ml.adityabodhankar.mobileapp.R;
 
@@ -46,7 +47,12 @@ public class ProductAdapter extends ArrayAdapter<ProductModel> {
             Glide.with(getContext()).load(product.getImage()).into(image);
         }
         itemView.setOnClickListener(view -> {
-            Intent intent = new Intent(getContext(), ProductDescriptionActivity.class);
+            Intent intent;
+            if (product.isPickup()){
+                intent = new Intent(getContext(), PickupProductDescriptionActivity.class);
+            }else {
+                intent = new Intent(getContext(), ProductDescriptionActivity.class);
+            }
             intent.putExtra("id", product.getId());
             getContext().startActivity(intent);
         });

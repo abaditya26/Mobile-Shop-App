@@ -10,4 +10,13 @@
     <string name="title_activity_admin_dash">AdminDashActivity</string>
     <string name="title_activity_admin">AdminActivity</string>
     <string name="title_activity_admin_page">AdminPageActivity</string>
+    <string name="pickup_description_text">
+        Description of the repair is required.\n
+        Description should include following details\n
+        1. Model number of the device\n
+        2. Issue description\n
+        3. Repair you need to make\n
+        4. Any Suggestion\n
+        Please note that the pickup will only be scheduled if the above mentioned details are correct.
+    </string>
 </resources>
