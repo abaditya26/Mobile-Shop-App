@@ -30,7 +30,24 @@ Internship project for
     click the update status button to update the current status of the order at the order details page
 
 
-
+Project Images:-
+![plot](./project_images/login.png)
+![plot](./project_images/register.png)
+![plot](./project_images/profile.png)
+![plot](./project_images/admin_orders.png)
+![plot](./project_images/admin_categories.png)
+![plot](./project_images/admin_products.png)
+![plot](./project_images/admin_add_update_category.png)
+![plot](./project_images/admin_add_update_product.png)
+![plot](./project_images/admin_order_details.png)
+![plot](./project_images/admin_tracking_status_update.png)
+![plot](./project_images/user_home.png)
+![plot](./project_images/user_cart.png)
+![plot](./project_images/user_orders.png)
+![plot](./project_images/user_home_filter_category.png)
+![plot](./project_images/user_order_details.png)
+![plot](./project_images/user_checkout.png)
+![plot](./project_images/user_payment.png)
 
 #TIS
 #ticktechitsolutions
