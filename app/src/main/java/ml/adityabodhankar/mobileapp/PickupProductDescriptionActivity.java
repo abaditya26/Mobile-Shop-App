@@ -55,6 +55,12 @@ public class PickupProductDescriptionActivity extends AppCompatActivity {
                 Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
             }
         });
+
+        (findViewById(R.id.proceed_btn)).setOnClickListener(view -> {
+            Intent i = new Intent(this, PickupGetDetailsActivity.class);
+            i.putExtra("id", id);
+            startActivity(i);
+        });
     }
 
     private void setUi(ProductModel product) {

@@ -114,6 +114,10 @@ public class CheckoutActivity extends AppCompatActivity implements PaymentResult
         if (!validateInput()) {
             return;
         }
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat formatter =
+                new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        Date date = new Date();
+        String currentDate = formatter.format(date);
         showLoading(true);
         order = new OrderModel("", Objects.requireNonNull(auth.getCurrentUser()).getUid(),
                 cartProducts.get(0).getProductName() +
@@ -121,7 +125,7 @@ public class CheckoutActivity extends AppCompatActivity implements PaymentResult
                 cartProducts.get(0).getProductImage(),
                 "Payment Pending", nameInp.getText().toString(), phoneInp.getText().toString(),
                 houseNumberInp.getText().toString(), streetInp.getText().toString(), landmarkInp.getText().toString(),
-                cityInp.getText().toString(), pinCodeInp.getText().toString(), total);
+                cityInp.getText().toString(), pinCodeInp.getText().toString(), total, currentDate);
         db.collection("orders").add(order)
                 .addOnSuccessListener(documentReference -> {
                     order.setOrderId(documentReference.getId());

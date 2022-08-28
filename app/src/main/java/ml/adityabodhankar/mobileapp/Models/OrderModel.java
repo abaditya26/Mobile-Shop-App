@@ -3,10 +3,12 @@ package ml.adityabodhankar.mobileapp.Models;
 import java.util.Map;
 
 public class OrderModel {
-    private String orderId, uid, orderTitle, orderImage, orderStatus, name, phone, addressHouseNo, addressStreet, addressLandmark, addressCity, addressPinCode;
+    private String orderId, uid, orderTitle, orderImage, orderStatus, name, phone, addressHouseNo,
+            addressStreet, addressLandmark, addressCity, addressPinCode, timeStamp;
     private double orderTotal;
     private String paymentId;
     private boolean isPaid = false;
+    private boolean isPickup = false;
 
     public OrderModel(Map<String, Object> data) {
         this.orderId = (String) data.get("orderId");
@@ -23,12 +25,14 @@ public class OrderModel {
         this.addressPinCode = (String) data.get("addressPinCode");
         this.orderTotal = (double) data.get("orderTotal");
         this.isPaid = (boolean) data.get("paid");
+        this.isPickup = (boolean) data.get("pickup");
         this.paymentId = (String) data.get("paymentId");
+        this.timeStamp = (String) data.get("timeStamp");
     }
 
     public OrderModel(String orderId, String uid, String orderTitle, String orderImage, String orderStatus, String name, String phone, String addressHouseNo,
                       String addressStreet, String addressLandmark, String addressCity,
-                      String addressPinCode, double orderTotal) {
+                      String addressPinCode, double orderTotal, String timeStamp) {
         this.orderId = orderId;
         this.uid = uid;
         this.orderTitle = orderTitle;
@@ -43,10 +47,36 @@ public class OrderModel {
         this.addressPinCode = addressPinCode;
         this.orderTotal = orderTotal;
         this.isPaid = false;
+        this.isPickup = false;
         this.paymentId = "";
+        this.timeStamp = timeStamp;
     }
 
     public OrderModel() {
+    }
+
+    public OrderModel(String orderId, String uid, String orderTitle, String orderImage,
+                      String orderStatus, String name, String phone, String addressHouseNo,
+                      String addressStreet, String addressLandmark, String addressCity,
+                      String addressPinCode, double orderTotal, boolean isPaid, boolean isPickup,
+                      String timeStamp) {
+        this.orderId = orderId;
+        this.uid = uid;
+        this.orderTitle = orderTitle;
+        this.orderImage = orderImage;
+        this.orderStatus = orderStatus;
+        this.name = name;
+        this.phone = phone;
+        this.addressHouseNo = addressHouseNo;
+        this.addressStreet = addressStreet;
+        this.addressLandmark = addressLandmark;
+        this.addressCity = addressCity;
+        this.addressPinCode = addressPinCode;
+        this.orderTotal = orderTotal;
+        this.paymentId = "";
+        this.isPaid = isPaid;
+        this.isPickup = isPickup;
+        this.timeStamp = timeStamp;
     }
 
     public String getOrderImage() {
@@ -167,5 +197,21 @@ public class OrderModel {
 
     public void setPaymentId(String paymentId) {
         this.paymentId = paymentId;
+    }
+
+    public boolean isPickup() {
+        return isPickup;
+    }
+
+    public void setPickup(boolean pickup) {
+        isPickup = pickup;
+    }
+
+    public String getTimeStamp() {
+        return timeStamp;
+    }
+
+    public void setTimeStamp(String timeStamp) {
+        this.timeStamp = timeStamp;
     }
 }
